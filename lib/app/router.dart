@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:tagme/features/map/presentation/screens/map_screen.dart';
 import 'package:tagme/features/map/providers/location_provider.dart';
 import 'package:tagme/features/permission/presentation/screens/location_permission_screen.dart';
 import 'package:tagme/features/profile/presentation/screens/profile_edit_screen.dart';
@@ -14,7 +15,7 @@ part 'router.g.dart';
 GoRouter router(Ref ref) {
   final hasPermission = ref.watch(hasLocationPermissionProvider);
   final hasProfileAsync = ref.watch(hasProfileProvider);
-  final profileExists = hasProfileAsync.valueOrNull ?? false;
+  final profileExists = hasProfileAsync.value ?? false;
 
   return GoRouter(
     initialLocation: '/map',
@@ -57,9 +58,7 @@ GoRouter router(Ref ref) {
       ),
       GoRoute(
         path: '/map',
-        builder: (context, state) => const _PlaceholderScreen(
-          name: 'Map',
-        ),
+        builder: (context, state) => const MapScreen(),
       ),
       GoRoute(
         path: '/profile-edit',
@@ -67,24 +66,4 @@ GoRouter router(Ref ref) {
       ),
     ],
   );
-}
-
-/// Temporary placeholder screen used until actual screens are built.
-class _PlaceholderScreen extends StatelessWidget {
-  const _PlaceholderScreen({required this.name});
-
-  final String name;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(name)),
-      body: Center(
-        child: Text(
-          name,
-          style: Theme.of(context).textTheme.titleLarge,
-        ),
-      ),
-    );
-  }
 }
