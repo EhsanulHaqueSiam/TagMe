@@ -34,7 +34,7 @@ Plans:
 - [x] 01-01-PLAN.md -- Project foundation: Flutter scaffold, dependencies, models, theme, routing
 - [x] 01-02-PLAN.md -- Profile feature: Firestore repository, setup screen, edit screen, form widgets
 - [x] 01-03-PLAN.md -- Map and location: permission screen, GPS providers, map screen with OSM tiles
-- [ ] 01-04-PLAN.md -- Nearby students: geo query provider, markers, clustering, bottom sheet, seed data
+- [x] 01-04-PLAN.md -- Nearby students: geo query provider, markers, clustering, bottom sheet, seed data
 **UI hint**: yes
 
 ### Phase 2: Rides & Matching

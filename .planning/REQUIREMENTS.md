@@ -10,7 +10,7 @@ Requirements for initial release. Each maps to roadmap phases.
 ### Map & Location
 
 - [x] **MAP-01**: Student can see an interactive map centered on their current location
-- [ ] **MAP-02**: Student can see nearby students on the map with name, photo, university, route, and transport type
+- [x] **MAP-02**: Student can see nearby students on the map with name, photo, university, route, and transport type
 - [x] **MAP-03**: Map uses free OpenStreetMap tiles with flutter_map (no paid APIs)
 - [x] **MAP-04**: Location updates only in foreground (compliant with Play Store policy)
 
@@ -18,7 +18,7 @@ Requirements for initial release. Each maps to roadmap phases.
 
 - [x] **PROF-01**: Student can create a profile with name, photo, and university
 - [x] **PROF-02**: Student can set gender for gender preference matching
-- [ ] **PROF-03**: Student can view other students' profiles from map pins or ride cards
+- [x] **PROF-03**: Student can view other students' profiles from map pins or ride cards
 
 ### Rides
 
@@ -104,12 +104,12 @@ Which phases cover which requirements. Updated during roadmap creation.
 | Requirement | Phase | Status |
 |-------------|-------|--------|
 | MAP-01 | Phase 1 | Complete |
-| MAP-02 | Phase 1 | Pending |
+| MAP-02 | Phase 1 | Complete |
 | MAP-03 | Phase 1 | Complete |
 | MAP-04 | Phase 1 | Complete |
 | PROF-01 | Phase 1 | Complete |
 | PROF-02 | Phase 1 | Complete |
-| PROF-03 | Phase 1 | Pending |
+| PROF-03 | Phase 1 | Complete |
 | RIDE-01 | Phase 2 | Pending |
 | RIDE-02 | Phase 2 | Pending |
 | RIDE-03 | Phase 2 | Pending |
