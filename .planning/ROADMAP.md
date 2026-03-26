@@ -33,7 +33,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 Plans:
 - [x] 01-01-PLAN.md -- Project foundation: Flutter scaffold, dependencies, models, theme, routing
 - [x] 01-02-PLAN.md -- Profile feature: Firestore repository, setup screen, edit screen, form widgets
-- [ ] 01-03-PLAN.md -- Map and location: permission screen, GPS providers, map screen with OSM tiles
+- [x] 01-03-PLAN.md -- Map and location: permission screen, GPS providers, map screen with OSM tiles
 - [ ] 01-04-PLAN.md -- Nearby students: geo query provider, markers, clustering, bottom sheet, seed data
 **UI hint**: yes
 

@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 01-02-PLAN.md
-last_updated: "2026-03-26T22:44:29.865Z"
+stopped_at: Completed 01-03-PLAN.md
+last_updated: "2026-03-26T22:47:14.533Z"
 last_activity: 2026-03-26
 progress:
   total_phases: 4
   completed_phases: 0
   total_plans: 4
-  completed_plans: 2
+  completed_plans: 3
   percent: 0
 ---
 
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-03-27)
 ## Current Position
 
 Phase: 01 (map-profiles) — EXECUTING
-Plan: 3 of 4
+Plan: 4 of 4
 Status: Ready to execute
 Last activity: 2026-03-26
 
@@ -54,6 +54,7 @@ Progress: [░░░░░░░░░░] 0%
 *Updated after each plan completion*
 | Phase 01-map-profiles P01 | 8min | 3 tasks | 12 files |
 | Phase 01-map-profiles P02 | 6min | 2 tasks | 9 files |
+| Phase 01-map-profiles P03 | 9min | 2 tasks | 7 files |
 
 ## Accumulated Context
 
@@ -69,6 +70,9 @@ Recent decisions affecting current work:
 - [Phase 01-map-profiles]: Fixed dep version conflicts: freezed_annotation 3.1.0, json_annotation 4.11.0, json_serializable 6.13.0
 - [Phase 01-map-profiles]: Firebase init commented out in main.dart until flutterfire configure generates firebase_options.dart
 - [Phase 01-map-profiles]: Used shared_preferences for local profile ID persistence; Riverpod 3.x generates profileProvider (not profileNotifierProvider)
+- [Phase 01-map-profiles]: Used LocationSettings instead of deprecated desiredAccuracy (geolocator 14.x)
+- [Phase 01-map-profiles]: Used AsyncValue.value instead of valueOrNull (not in riverpod 3.2.1)
+- [Phase 01-map-profiles]: Riverpod 4.x codegen: ProfileNotifier generates profileProvider (not profileNotifierProvider)
 
 ### Pending Todos
 
@@ -82,6 +86,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-26T22:44:29.864Z
-Stopped at: Completed 01-02-PLAN.md
+Last session: 2026-03-26T22:47:14.532Z
+Stopped at: Completed 01-03-PLAN.md
 Resume file: None

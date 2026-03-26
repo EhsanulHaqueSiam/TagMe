@@ -9,7 +9,7 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Map & Location
 
-- [ ] **MAP-01**: Student can see an interactive map centered on their current location
+- [x] **MAP-01**: Student can see an interactive map centered on their current location
 - [ ] **MAP-02**: Student can see nearby students on the map with name, photo, university, route, and transport type
 - [x] **MAP-03**: Map uses free OpenStreetMap tiles with flutter_map (no paid APIs)
 - [x] **MAP-04**: Location updates only in foreground (compliant with Play Store policy)
@@ -103,7 +103,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| MAP-01 | Phase 1 | Pending |
+| MAP-01 | Phase 1 | Complete |
 | MAP-02 | Phase 1 | Pending |
 | MAP-03 | Phase 1 | Complete |
 | MAP-04 | Phase 1 | Complete |
