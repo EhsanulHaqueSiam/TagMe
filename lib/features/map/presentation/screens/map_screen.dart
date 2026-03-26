@@ -1,20 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:tagme/core/constants/app_colors.dart';
 import 'package:tagme/features/map/presentation/widgets/map_top_bar.dart';
 import 'package:tagme/features/map/presentation/widgets/my_location_fab.dart';
+import 'package:tagme/features/map/presentation/widgets/student_bottom_sheet.dart';
+import 'package:tagme/features/map/presentation/widgets/student_marker.dart';
 import 'package:tagme/features/map/providers/location_provider.dart';
+import 'package:tagme/features/map/providers/nearby_students_provider.dart';
+import 'package:tagme/features/profile/data/models/student.dart';
 
 /// Fallback center when GPS is not yet available (Dhaka, Bangladesh).
 const _dhakaCenter = LatLng(23.8103, 90.4125);
 
-/// Full-screen map with OSM tiles, user location blue dot, top bar, and FAB.
+/// Full-screen map with OSM tiles, user location blue dot, nearby student
+/// markers with clustering, top bar, and FAB.
 ///
-/// Centers on the user's GPS location at zoom 13. The blue pulsing dot marks
-/// the user's position. Student markers and clustering are added in Plan 04.
+/// Centers on the user's GPS location at zoom 13. Nearby student markers
+/// appear as clustered circular avatars with university-colored borders.
+/// Tapping a marker shows a profile bottom sheet.
 class MapScreen extends ConsumerStatefulWidget {
   const MapScreen({super.key});
 
@@ -28,10 +35,14 @@ class _MapScreenState extends ConsumerState<MapScreen> {
   /// Tracks latest user location for the FAB recenter.
   LatLng? _userLocation;
 
+  /// Whether nearby students have loaded at least once (for fade-in animation).
+  bool _studentsLoaded = false;
+
   @override
   Widget build(BuildContext context) {
     final locationAsync = ref.watch(currentLocationProvider);
     final hasPermission = ref.watch(hasLocationPermissionProvider);
+    final nearbyStudentsAsync = ref.watch(nearbyStudentsProvider);
 
     // Derive user's position or fall back to Dhaka center.
     final userLatLng = locationAsync.whenOrNull(
@@ -44,6 +55,30 @@ class _MapScreenState extends ConsumerState<MapScreen> {
     }
 
     final mapCenter = userLatLng ?? _dhakaCenter;
+
+    // Build student markers from nearby students data.
+    final nearbyStudents = nearbyStudentsAsync.value ?? <Student>[];
+    if (nearbyStudents.isNotEmpty && !_studentsLoaded) {
+      _studentsLoaded = true;
+    }
+
+    final studentMarkers = nearbyStudents
+        .where((s) => s.geopoint != null)
+        .map(
+          (student) => Marker(
+            point: LatLng(
+              student.geopoint!.latitude,
+              student.geopoint!.longitude,
+            ),
+            width: 48,
+            height: 48,
+            child: StudentMarker(
+              student: student,
+              onTap: () => _showStudentBottomSheet(context, student),
+            ),
+          ),
+        )
+        .toList();
 
     // Show error snackbar when location fails.
     ref.listen(currentLocationProvider, (previous, next) {
@@ -69,12 +104,13 @@ class _MapScreenState extends ConsumerState<MapScreen> {
             children: [
               // OSM tile layer
               TileLayer(
-                urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                urlTemplate:
+                    'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
                 userAgentPackageName: 'com.tagme.app',
                 maxZoom: 19,
               ),
 
-              // User location blue dot marker
+              // User location blue dot marker (separate from cluster layer)
               if (userLatLng != null)
                 MarkerLayer(
                   markers: [
@@ -85,6 +121,46 @@ class _MapScreenState extends ConsumerState<MapScreen> {
                       child: const _PulsingBlueDot(),
                     ),
                   ],
+                ),
+
+              // Nearby student markers with clustering
+              if (studentMarkers.isNotEmpty)
+                AnimatedOpacity(
+                  opacity: _studentsLoaded ? 1.0 : 0.0,
+                  duration: const Duration(milliseconds: 200),
+                  child: MarkerClusterLayerWidget(
+                    options: MarkerClusterLayerOptions(
+                      markers: studentMarkers,
+                      // Plan specifies explicit 80px cluster radius.
+                      // ignore: avoid_redundant_argument_values
+                      maxClusterRadius: 80,
+                      size: const Size(48, 48),
+                      markerChildBehavior: true,
+                      builder: (context, markers) {
+                        return Container(
+                          width: 48,
+                          height: 48,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color:
+                                AppColors.accent.withValues(alpha: 0.8),
+                          ),
+                          child: Center(
+                            child: Text(
+                              '${markers.length}',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .labelLarge
+                                  ?.copyWith(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
                 ),
             ],
           ),
@@ -114,7 +190,8 @@ class _MapScreenState extends ConsumerState<MapScreen> {
               right: 0,
               child: SafeArea(
                 child: Container(
-                  margin: const EdgeInsets.only(top: 56, left: 16, right: 16),
+                  margin:
+                      const EdgeInsets.only(top: 56, left: 16, right: 16),
                   child: Material(
                     elevation: 2,
                     borderRadius: BorderRadius.circular(8),
@@ -153,6 +230,16 @@ class _MapScreenState extends ConsumerState<MapScreen> {
             ),
         ],
       ),
+    );
+  }
+
+  /// Shows the student profile bottom sheet with a slide-up animation.
+  void _showStudentBottomSheet(BuildContext context, Student student) {
+    showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (_) => StudentBottomSheet(student: student),
     );
   }
 
