@@ -1,6 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:tagme/features/chat/data/repositories/chat_repository.dart';
+import 'package:tagme/features/fares/data/models/fare_entry.dart';
+import 'package:tagme/features/fares/data/repositories/fare_repository.dart';
+import 'package:tagme/features/fares/data/services/fare_calculator.dart';
 import 'package:tagme/features/rides/data/models/join_request.dart';
 
 part 'join_request_repository.g.dart';
@@ -76,6 +79,8 @@ class JoinRequestRepository {
     String? requesterId;
     String? requesterName;
     String? requesterUniversity;
+    int transactionFilledSeats = 0;
+    int transactionEstimatedFare = 0;
 
     await _firestore.runTransaction((transaction) async {
       // Read ride document.
@@ -87,12 +92,15 @@ class JoinRequestRepository {
       posterId = rideData['posterId'] as String?;
       final filledSeats = (rideData['filledSeats'] as num?)?.toInt() ?? 0;
       final totalSeats = (rideData['totalSeats'] as num?)?.toInt() ?? 0;
+      transactionEstimatedFare =
+          (rideData['estimatedFare'] as num?)?.toInt() ?? 0;
 
       if (filledSeats >= totalSeats) {
         throw Exception('Ride is full');
       }
 
       final newFilledSeats = filledSeats + 1;
+      transactionFilledSeats = newFilledSeats;
       final updates = <String, dynamic>{
         'filledSeats': newFilledSeats,
         'updatedAt': FieldValue.serverTimestamp(),
@@ -144,6 +152,24 @@ class JoinRequestRepository {
         rideTransportType: rideTransportType,
         rideDepartureTime: rideDepartureTime,
       );
+
+      // Create fare ledger entry: requester owes poster.
+      final fareRepo = FareRepository(firestore: _firestore);
+      final fareCalc = FareCalculator();
+      // filledSeats includes poster + all accepted riders
+      final perPerson = fareCalc.calculatePerPersonFare(
+        transactionEstimatedFare,
+        transactionFilledSeats + 1, // +1 for the poster
+      );
+      await fareRepo.createEntry(FareEntry(
+        rideId: rideId,
+        fromStudentId: requesterId!,
+        toStudentId: posterId!,
+        amount: perPerson,
+        routeDescription: '$rideOrigin -> $rideDestination',
+        transportType: rideTransportType,
+        rideDate: rideDepartureTime,
+      ));
     }
   }
 

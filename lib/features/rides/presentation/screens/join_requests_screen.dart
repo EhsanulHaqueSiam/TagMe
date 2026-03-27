@@ -5,6 +5,7 @@ import 'package:tagme/core/constants/app_colors.dart';
 import 'package:tagme/core/constants/app_spacing.dart';
 import 'package:tagme/features/rides/data/models/join_request.dart';
 import 'package:tagme/features/profile/providers/profile_provider.dart';
+import 'package:tagme/features/notifications/providers/notification_providers.dart';
 import 'package:tagme/features/rides/data/repositories/join_request_repository.dart';
 import 'package:tagme/features/rides/providers/ride_providers.dart';
 
@@ -137,6 +138,15 @@ class _JoinRequestsScreenState extends ConsumerState<JoinRequestsScreen>
         rideDestination: ride?.destinationAddress ?? '',
         rideTransportType: ride?.transportType ?? '',
         rideDepartureTime: ride?.departureTime ?? DateTime.now(),
+      );
+
+      // Schedule departure reminder for the accepted rider's ride.
+      final notifService = ref.read(localNotificationServiceProvider);
+      await notifService.scheduleDepartureReminder(
+        id: widget.rideId.hashCode ^ request.id.hashCode,
+        rideOrigin: ride?.originAddress ?? '',
+        rideDestination: ride?.destinationAddress ?? '',
+        departureTime: ride?.departureTime ?? DateTime.now(),
       );
 
       setState(() {
