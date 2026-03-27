@@ -64,7 +64,12 @@ Plans:
   1. Student can open an in-app chat with any matched rider and exchange messages in real time
   2. Student can optionally share their phone number within a chat conversation
   3. Student receives push notifications for new ride matches, new chat messages, and upcoming departure reminders
-**Plans**: TBD
+**Plans**: 4 plans
+Plans:
+- [ ] 03-01-PLAN.md -- Chat data foundation: dependencies, Freezed models, ChatRepository, chat providers
+- [ ] 03-02-PLAN.md -- Chat UI: screens, widgets, navigation integration, join request conversation creation
+- [ ] 03-03-PLAN.md -- Notification services: FCM token management, local departure reminders, app startup wiring
+- [ ] 03-04-PLAN.md -- Cloud Functions: server-side FCM triggers for chat messages and ride match notifications
 **UI hint**: yes
 
 ### Phase 4: Play Store Launch
@@ -87,5 +92,5 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 |-------|----------------|--------|-----------|
 | 1. Map & Profiles | 4/4 | Complete | 2026-03-27 |
 | 2. Rides & Matching | 0/5 | Planning complete | - |
-| 3. Chat & Notifications | 0/TBD | Not started | - |
+| 3. Chat & Notifications | 0/4 | Planning complete | - |
 | 4. Play Store Launch | 0/TBD | Not started | - |
