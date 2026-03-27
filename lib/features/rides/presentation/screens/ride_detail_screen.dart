@@ -566,23 +566,52 @@ class _RideDetailScreenState extends ConsumerState<RideDetailScreen>
 
         // Already accepted
         if (existingRequest?.status == 'accepted') {
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+          return Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
-                "You're In",
-                style: theme.textTheme.bodyLarge?.copyWith(
-                  color: AppColors.success,
-                  fontWeight: FontWeight.w600,
+              SizedBox(
+                width: double.infinity,
+                height: 48,
+                child: FilledButton.icon(
+                  onPressed: () async {
+                    // Find conversation for this ride + current user
+                    final snapshot = await ref
+                        .read(rideRepositoryProvider)
+                        .firestore
+                        .collection('conversations')
+                        .where('rideId', isEqualTo: widget.rideId)
+                        .where('participantIds',
+                            arrayContains: currentUserId)
+                        .limit(1)
+                        .get();
+                    if (snapshot.docs.isNotEmpty && context.mounted) {
+                      context.push('/chats/${snapshot.docs.first.id}');
+                    }
+                  },
+                  icon: const Icon(Icons.chat_bubble_outline),
+                  label: const Text('Open Chat'),
                 ),
               ),
-              const SizedBox(width: AppSpacing.md),
-              TextButton(
-                onPressed: () => _showLeaveConfirmation(context),
-                child: Text(
-                  'Leave Ride',
-                  style: TextStyle(color: AppColors.destructive),
-                ),
+              const SizedBox(height: AppSpacing.sm),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "You're In",
+                    style: theme.textTheme.bodyLarge?.copyWith(
+                      color: AppColors.success,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  const SizedBox(width: AppSpacing.md),
+                  TextButton(
+                    onPressed: () => _showLeaveConfirmation(context),
+                    child: Text(
+                      'Leave Ride',
+                      style: TextStyle(color: AppColors.destructive),
+                    ),
+                  ),
+                ],
               ),
             ],
           );
