@@ -10,6 +10,8 @@ import 'package:tagme/features/profile/presentation/screens/profile_setup_screen
 import 'package:tagme/features/profile/providers/profile_provider.dart';
 import 'package:tagme/features/rides/presentation/screens/map_pin_picker_screen.dart';
 import 'package:tagme/features/rides/presentation/screens/post_ride_screen.dart';
+import 'package:tagme/features/rides/presentation/screens/ride_search_screen.dart';
+import 'package:tagme/features/rides/presentation/screens/rides_tab_screen.dart';
 
 part 'router.g.dart';
 
@@ -85,7 +87,7 @@ GoRouter router(Ref ref) {
             routes: [
               GoRoute(
                 path: '/rides',
-                builder: (context, state) => const _RidesPlaceholder(),
+                builder: (context, state) => const RidesTabScreen(),
               ),
             ],
           ),
@@ -117,7 +119,7 @@ GoRouter router(Ref ref) {
       ),
       GoRoute(
         path: '/rides/search',
-        builder: (context, state) => const _RideSearchPlaceholder(),
+        builder: (context, state) => const RideSearchScreen(),
       ),
       GoRoute(
         path: '/rides/schedule',
@@ -135,17 +137,7 @@ GoRouter router(Ref ref) {
 // Placeholder screens — replaced by real screens in Plans 02-05.
 // ---------------------------------------------------------------------------
 
-class _RidesPlaceholder extends StatelessWidget {
-  const _RidesPlaceholder();
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(child: Text('Rides - Coming Soon')),
-    );
-  }
-}
-
+// _RidesPlaceholder replaced by RidesTabScreen (Plan 02-03).
 // _PostRidePlaceholder and _MapPinPickerPlaceholder replaced by real
 // screens: PostRideScreen and MapPinPickerScreen (Plan 02-02).
 
@@ -173,16 +165,7 @@ class _JoinRequestsPlaceholder extends StatelessWidget {
   }
 }
 
-class _RideSearchPlaceholder extends StatelessWidget {
-  const _RideSearchPlaceholder();
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(child: Text('Ride Search - Coming Soon')),
-    );
-  }
-}
+// _RideSearchPlaceholder replaced by RideSearchScreen (Plan 02-03).
 
 class _RecurringSchedulePlaceholder extends StatelessWidget {
   const _RecurringSchedulePlaceholder();
