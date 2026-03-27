@@ -68,7 +68,7 @@ Plans:
 Plans:
 - [x] 03-01-PLAN.md -- Chat data foundation: dependencies, Freezed models, ChatRepository, chat providers
 - [ ] 03-02-PLAN.md -- Chat UI: screens, widgets, navigation integration, join request conversation creation
-- [ ] 03-03-PLAN.md -- Notification services: FCM token management, local departure reminders, app startup wiring
+- [x] 03-03-PLAN.md -- Notification services: FCM token management, local departure reminders, app startup wiring
 - [ ] 03-04-PLAN.md -- Cloud Functions: server-side FCM triggers for chat messages and ride match notifications
 **UI hint**: yes
 

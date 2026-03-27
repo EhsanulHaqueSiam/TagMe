@@ -38,7 +38,7 @@ Requirements for initial release. Each maps to roadmap phases.
 - [ ] **CHAT-02**: Student can optionally share phone number in chat
 - [ ] **CHAT-03**: Student receives push notification for new ride matches
 - [ ] **CHAT-04**: Student receives push notification for new chat messages
-- [ ] **CHAT-05**: Student receives push notification for upcoming departure reminders
+- [x] **CHAT-05**: Student receives push notification for upcoming departure reminders
 
 ### Fare
 
@@ -129,7 +129,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | CHAT-02 | Phase 3 | Pending |
 | CHAT-03 | Phase 3 | Pending |
 | CHAT-04 | Phase 3 | Pending |
-| CHAT-05 | Phase 3 | Pending |
+| CHAT-05 | Phase 3 | Complete |
 | STORE-01 | Phase 4 | Pending |
 | STORE-02 | Phase 4 | Pending |
 | STORE-03 | Phase 4 | Pending |
