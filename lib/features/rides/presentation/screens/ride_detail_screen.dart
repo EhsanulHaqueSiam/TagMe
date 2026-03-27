@@ -10,6 +10,8 @@ import 'package:tagme/core/constants/transport_types.dart';
 import 'package:tagme/features/fares/data/services/fare_calculator.dart';
 import 'package:tagme/features/profile/providers/profile_provider.dart';
 import 'package:tagme/features/rides/data/models/ride.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:tagme/features/rides/data/repositories/join_request_repository.dart';
 import 'package:tagme/features/rides/data/repositories/ride_repository.dart';
 import 'package:tagme/features/rides/presentation/widgets/route_visualization.dart';
 import 'package:tagme/features/rides/providers/ride_providers.dart';
@@ -577,9 +579,7 @@ class _RideDetailScreenState extends ConsumerState<RideDetailScreen>
                 child: FilledButton.icon(
                   onPressed: () async {
                     // Find conversation for this ride + current user
-                    final snapshot = await ref
-                        .read(rideRepositoryProvider)
-                        .firestore
+                    final snapshot = await FirebaseFirestore.instance
                         .collection('conversations')
                         .where('rideId', isEqualTo: widget.rideId)
                         .where('participantIds',
@@ -720,7 +720,7 @@ class _RideDetailScreenState extends ConsumerState<RideDetailScreen>
           TextButton(
             onPressed: () {
               Navigator.of(context).pop();
-              // TODO: Implement leave ride functionality
+              _leaveRide();
             },
             child: Text(
               'Leave',
@@ -730,6 +730,76 @@ class _RideDetailScreenState extends ConsumerState<RideDetailScreen>
         ],
       ),
     );
+  }
+
+  Future<void> _leaveRide() async {
+    final currentUserId = ref.read(profileProvider).value?.id ?? '';
+    if (currentUserId.isEmpty) return;
+
+    try {
+      final firestore = FirebaseFirestore.instance;
+
+      // Find the accepted join request for this user on this ride.
+      final repo = ref.read(joinRequestRepositoryProvider);
+      final request = await repo.existingRequest(widget.rideId, currentUserId);
+      if (request == null || request.status != 'accepted') return;
+
+      // Update join request status to 'left'.
+      await firestore.collection('joinRequests').doc(request.id).update({
+        'status': 'left',
+        'updatedAt': FieldValue.serverTimestamp(),
+      });
+
+      // Decrement filledSeats and revert status if it was 'full'.
+      final rideRef = firestore.collection('rides').doc(widget.rideId);
+      await firestore.runTransaction((transaction) async {
+        final rideDoc = await transaction.get(rideRef);
+        if (!rideDoc.exists) return;
+
+        final data = rideDoc.data()!;
+        final filledSeats = (data['filledSeats'] as num?)?.toInt() ?? 0;
+        final status = data['status'] as String? ?? 'active';
+
+        final updates = <String, dynamic>{
+          'filledSeats': filledSeats > 0 ? filledSeats - 1 : 0,
+          'updatedAt': FieldValue.serverTimestamp(),
+        };
+        if (status == 'full') {
+          updates['status'] = 'active';
+        }
+        transaction.update(rideRef, updates);
+      });
+
+      // Remove rider from subcollection.
+      await rideRef.collection('riders').doc(currentUserId).delete();
+
+      // Refresh UI.
+      ref.invalidate(rideDetailProvider(widget.rideId));
+      ref.invalidate(
+        existingJoinRequestProvider(
+          rideId: widget.rideId,
+          requesterId: currentUserId,
+        ),
+      );
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Left ride'),
+            backgroundColor: Color(0xFF323232),
+          ),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Could not leave ride. Try again.'),
+            backgroundColor: Color(0xFF323232),
+          ),
+        );
+      }
+    }
   }
 
   void _showCancelConfirmation(BuildContext context) {

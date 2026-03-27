@@ -35,6 +35,43 @@ class SettingsScreen extends StatelessWidget {
 
           const Divider(indent: AppSpacing.md, endIndent: AppSpacing.md),
 
+          // --- Rides section ---
+          Padding(
+            padding: const EdgeInsets.only(
+              left: AppSpacing.md,
+              top: AppSpacing.sm,
+              bottom: AppSpacing.xs,
+            ),
+            child: Text(
+              'Rides',
+              style: theme.textTheme.labelMedium?.copyWith(
+                color: AppColors.onSurfaceDim,
+              ),
+            ),
+          ),
+
+          ListTile(
+            leading: Icon(
+              Icons.receipt_long_outlined,
+              color: AppColors.accent,
+            ),
+            title: const Text('Fare History'),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => context.push('/fares'),
+          ),
+
+          ListTile(
+            leading: Icon(
+              Icons.schedule_outlined,
+              color: AppColors.accent,
+            ),
+            title: const Text('Recurring Schedule'),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => context.push('/rides/schedule'),
+          ),
+
+          const Divider(indent: AppSpacing.md, endIndent: AppSpacing.md),
+
           // --- Legal section ---
           Padding(
             padding: const EdgeInsets.only(
