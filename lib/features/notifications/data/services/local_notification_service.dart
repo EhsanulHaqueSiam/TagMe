@@ -13,6 +13,10 @@ class LocalNotificationService {
 
   final FlutterLocalNotificationsPlugin _plugin;
 
+  /// Navigation callback set by the app after router is available.
+  /// Called with the notification payload (conversationId) on tap.
+  static void Function(String payload)? onNotificationTap;
+
   /// Initializes timezone data, the notification plugin, and Android channels.
   Future<void> init() async {
     tz_data.initializeTimeZones();
@@ -114,12 +118,11 @@ class LocalNotificationService {
     await _plugin.cancel(id: id);
   }
 
-  /// Handles a tap on a notification.
-  ///
-  /// Navigation routing will be wired when GoRouter context is available.
+  /// Handles a tap on a notification by navigating to the relevant screen.
   void _onNotificationTap(NotificationResponse response) {
-    debugPrint(
-      'Notification tapped: ${response.payload}',
-    );
+    final payload = response.payload;
+    if (payload != null && payload.isNotEmpty) {
+      onNotificationTap?.call(payload);
+    }
   }
 }

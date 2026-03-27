@@ -1,6 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:tagme/app/shell_screen.dart';
+import 'package:tagme/main.dart' show navigatorKey;
 import 'package:tagme/features/map/presentation/screens/map_screen.dart';
 import 'package:tagme/features/map/providers/location_provider.dart';
 import 'package:tagme/features/permission/presentation/screens/location_permission_screen.dart';
@@ -34,6 +36,7 @@ GoRouter router(Ref ref) {
   final profileExists = hasProfileAsync.value ?? false;
 
   return GoRouter(
+    navigatorKey: navigatorKey,
     initialLocation: '/map',
     redirect: (context, state) {
       final currentPath = state.uri.path;

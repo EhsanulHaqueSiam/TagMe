@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tagme/app/app.dart';
 import 'package:tagme/core/utils/seed_data.dart';
@@ -10,6 +11,9 @@ import 'package:tagme/features/notifications/data/services/local_notification_se
 import 'package:tagme/features/rides/providers/schedule_providers.dart';
 
 import 'firebase_options.dart';
+
+/// Global navigator key used for notification tap navigation.
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,6 +31,14 @@ Future<void> main() async {
   // Initialize local notification service (no Firebase dependency).
   final localNotificationService = LocalNotificationService();
   await localNotificationService.init();
+
+  // Wire notification tap to navigate to the relevant chat conversation.
+  // The payload from FCM is a conversationId.
+  LocalNotificationService.onNotificationTap = (payload) {
+    navigatorKey.currentContext != null
+        ? GoRouter.of(navigatorKey.currentContext!).push('/chats/$payload')
+        : debugPrint('Navigator not ready for notification tap: $payload');
+  };
 
   // Initialize FCM token management (requires Firebase).
   // Wrapped in try-catch so the app still runs without Firebase configured.
