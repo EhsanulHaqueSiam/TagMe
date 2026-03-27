@@ -24,9 +24,9 @@ Requirements for initial release. Each maps to roadmap phases.
 
 - [ ] **RIDE-01**: Student can post a ride with origin, destination, departure time, and transport type
 - [ ] **RIDE-02**: Student can search for rides by route, time, and transport type
-- [ ] **RIDE-03**: Student can select transport type: rickshaw, bike, bus, car, CNG
-- [ ] **RIDE-04**: Student can optionally tag ride-hailing services: Pathao, Uber, Obhai
-- [ ] **RIDE-05**: Student can set available seats based on transport capacity
+- [x] **RIDE-03**: Student can select transport type: rickshaw, bike, bus, car, CNG
+- [x] **RIDE-04**: Student can optionally tag ride-hailing services: Pathao, Uber, Obhai
+- [x] **RIDE-05**: Student can set available seats based on transport capacity
 - [ ] **RIDE-06**: System matches rides by proximity (origin near origin, destination near destination, time overlap)
 - [ ] **RIDE-07**: Student can accept or decline a ride match
 - [ ] **RIDE-08**: Student can set recurring ride schedule (e.g., MWF at 8am, same route)
@@ -42,7 +42,7 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Fare
 
-- [ ] **FARE-01**: App estimates fare per transport type based on route distance
+- [x] **FARE-01**: App estimates fare per transport type based on route distance
 - [ ] **FARE-02**: App calculates cost-per-person split based on number of riders
 - [ ] **FARE-03**: App tracks fare splits across multiple rides (running tab between frequent co-riders)
 - [ ] **FARE-04**: Student can view fare history and outstanding balances with co-riders
@@ -112,14 +112,14 @@ Which phases cover which requirements. Updated during roadmap creation.
 | PROF-03 | Phase 1 | Complete |
 | RIDE-01 | Phase 2 | Pending |
 | RIDE-02 | Phase 2 | Pending |
-| RIDE-03 | Phase 2 | Pending |
-| RIDE-04 | Phase 2 | Pending |
-| RIDE-05 | Phase 2 | Pending |
+| RIDE-03 | Phase 2 | Complete |
+| RIDE-04 | Phase 2 | Complete |
+| RIDE-05 | Phase 2 | Complete |
 | RIDE-06 | Phase 2 | Pending |
 | RIDE-07 | Phase 2 | Pending |
 | RIDE-08 | Phase 2 | Pending |
 | RIDE-09 | Phase 2 | Pending |
-| FARE-01 | Phase 2 | Pending |
+| FARE-01 | Phase 2 | Complete |
 | FARE-02 | Phase 2 | Pending |
 | FARE-03 | Phase 2 | Pending |
 | FARE-04 | Phase 2 | Pending |

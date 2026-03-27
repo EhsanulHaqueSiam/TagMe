@@ -49,7 +49,7 @@ Plans:
   5. Student can see estimated fare per transport type and cost-per-person split, view fare history, and track outstanding balances with co-riders
 **Plans**: 5 plans
 Plans:
-- [ ] 02-01-PLAN.md -- Data foundation: Freezed models, TransportType enum, ORS route service, fare calculator, repositories, bottom nav shell
+- [x] 02-01-PLAN.md -- Data foundation: Freezed models, TransportType enum, ORS route service, fare calculator, repositories, bottom nav shell
 - [ ] 02-02-PLAN.md -- Ride posting: PostRideScreen form, MapPinPickerScreen, transport selector, seat stepper, ride providers
 - [ ] 02-03-PLAN.md -- Rides list and search: RideCard, RidesTabScreen (Nearby/My Rides), RideSearchScreen with matching
 - [ ] 02-04-PLAN.md -- Ride detail and join requests: RideDetailScreen, JoinRequestsScreen, accept/decline with atomic seat update

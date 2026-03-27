@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: verifying
-stopped_at: Completed 01-04-PLAN.md
-last_updated: "2026-03-26T22:57:28.788Z"
-last_activity: 2026-03-26
+status: executing
+stopped_at: Completed 02-01-PLAN.md
+last_updated: "2026-03-27T05:46:09.250Z"
+last_activity: 2026-03-27
 progress:
   total_phases: 4
   completed_phases: 1
-  total_plans: 4
-  completed_plans: 4
+  total_plans: 9
+  completed_plans: 5
   percent: 0
 ---
 
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-27)
 
 **Core value:** Students can quickly find verified fellow students heading the same way and share a ride
-**Current focus:** Phase 01 — map-profiles
+**Current focus:** Phase 02 — rides-matching
 
 ## Current Position
 
-Phase: 01 (map-profiles) — EXECUTING
-Plan: 4 of 4
-Status: Phase complete — ready for verification
-Last activity: 2026-03-26
+Phase: 02 (rides-matching) — EXECUTING
+Plan: 2 of 5
+Status: Ready to execute
+Last activity: 2026-03-27
 
 Progress: [░░░░░░░░░░] 0%
 
@@ -56,6 +56,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 01-map-profiles P02 | 6min | 2 tasks | 9 files |
 | Phase 01-map-profiles P03 | 9min | 2 tasks | 7 files |
 | Phase 01-map-profiles P04 | 6min | 3 tasks | 7 files |
+| Phase 02-rides-matching P01 | 10min | 3 tasks | 16 files |
 
 ## Accumulated Context
 
@@ -77,6 +78,9 @@ Recent decisions affecting current work:
 - [Phase 01-map-profiles]: Used asyncMap for nearby students stream to filter own profile via SharedPreferences
 - [Phase 01-map-profiles]: markerChildBehavior: true lets StudentMarker GestureDetector handle taps directly
 - [Phase 01-map-profiles]: Seed data call wrapped in try-catch so app runs without Firebase configured
+- [Phase 02-rides-matching]: Nested geo maps (origin/destination) store GeoPoint+geohash+address for geoflutterfire_plus compatibility
+- [Phase 02-rides-matching]: JoinRequest uses top-level collection for cross-ride querying
+- [Phase 02-rides-matching]: FareCalculator rounds up per-person split (ceil) to avoid underpayment
 
 ### Pending Todos
 
@@ -90,6 +94,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-26T22:57:28.786Z
-Stopped at: Completed 01-04-PLAN.md
+Last session: 2026-03-27T05:46:09.248Z
+Stopped at: Completed 02-01-PLAN.md
 Resume file: None
