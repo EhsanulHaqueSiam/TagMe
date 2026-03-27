@@ -4,6 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tagme/app/app.dart';
 import 'package:tagme/core/utils/seed_data.dart';
+import 'package:tagme/features/notifications/data/services/fcm_service.dart';
+import 'package:tagme/features/notifications/data/services/local_notification_service.dart';
 import 'package:tagme/features/rides/providers/schedule_providers.dart';
 
 Future<void> main() async {
@@ -14,6 +16,25 @@ Future<void> main() async {
   // await Firebase.initializeApp(
   //   options: DefaultFirebaseOptions.currentPlatform,
   // );
+
+  // Initialize local notification service (no Firebase dependency).
+  final localNotificationService = LocalNotificationService();
+  await localNotificationService.init();
+
+  // Initialize FCM token management (requires Firebase).
+  // Wrapped in try-catch so the app still runs without Firebase configured.
+  try {
+    final prefs = await SharedPreferences.getInstance();
+    final profileId = prefs.getString('local_profile_id');
+    if (profileId != null) {
+      final fcmService = FcmService(
+        localNotificationService: localNotificationService,
+      );
+      await fcmService.init(profileId);
+    }
+  } on Exception catch (e) {
+    debugPrint('FCM init skipped: $e');
+  }
 
   // Seed mock student data in debug mode (temporary for development).
   // Only runs when Firebase is configured; wrapped in try-catch so the app
