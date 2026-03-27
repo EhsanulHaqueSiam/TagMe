@@ -75,8 +75,26 @@ class MapTopBar extends ConsumerWidget {
               ),
             ),
 
-            // Right: empty spacer for balance (settings hidden in Phase 1)
-            const SizedBox(width: 40),
+            // Right: settings gear icon
+            GestureDetector(
+              onTap: () => context.push('/settings'),
+              child: Semantics(
+                label: 'Open settings',
+                child: Container(
+                  width: 40,
+                  height: 40,
+                  decoration: const BoxDecoration(
+                    color: Colors.black26,
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Icon(
+                    Icons.settings,
+                    size: 22,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
