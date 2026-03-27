@@ -132,6 +132,14 @@ GoRouter router(Ref ref) {
         ),
       ),
       GoRoute(
+        path: '/rides/search',
+        builder: (context, state) => const RideSearchScreen(),
+      ),
+      GoRoute(
+        path: '/rides/schedule',
+        builder: (context, state) => const RecurringScheduleScreen(),
+      ),
+      GoRoute(
         path: '/rides/:rideId',
         builder: (context, state) => RideDetailScreen(
           rideId: state.pathParameters['rideId']!,
@@ -142,14 +150,6 @@ GoRouter router(Ref ref) {
         builder: (context, state) => JoinRequestsScreen(
           rideId: state.pathParameters['rideId']!,
         ),
-      ),
-      GoRoute(
-        path: '/rides/search',
-        builder: (context, state) => const RideSearchScreen(),
-      ),
-      GoRoute(
-        path: '/rides/schedule',
-        builder: (context, state) => const RecurringScheduleScreen(),
       ),
       GoRoute(
         path: '/fares',
