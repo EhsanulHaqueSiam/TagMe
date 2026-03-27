@@ -1,8 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tagme/app/app.dart';
 import 'package:tagme/core/utils/seed_data.dart';
+import 'package:tagme/features/rides/providers/schedule_providers.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,6 +27,17 @@ Future<void> main() async {
     } on Exception catch (e) {
       debugPrint('Skipping seed: $e');
     }
+  }
+
+  // Process recurring ride schedules on app open.
+  try {
+    final prefs = await SharedPreferences.getInstance();
+    final profileId = prefs.getString('local_profile_id');
+    if (profileId != null) {
+      await processRecurringSchedules(profileId);
+    }
+  } on Exception catch (_) {
+    // Non-fatal: app continues even if auto-post fails.
   }
 
   runApp(const ProviderScope(child: TagMeApp()));
