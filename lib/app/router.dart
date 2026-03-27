@@ -8,6 +8,8 @@ import 'package:tagme/features/permission/presentation/screens/location_permissi
 import 'package:tagme/features/profile/presentation/screens/profile_edit_screen.dart';
 import 'package:tagme/features/profile/presentation/screens/profile_setup_screen.dart';
 import 'package:tagme/features/profile/providers/profile_provider.dart';
+import 'package:tagme/features/rides/presentation/screens/map_pin_picker_screen.dart';
+import 'package:tagme/features/rides/presentation/screens/post_ride_screen.dart';
 
 part 'router.g.dart';
 
@@ -93,11 +95,13 @@ GoRouter router(Ref ref) {
       // Full-screen Phase 2 routes (no bottom nav).
       GoRoute(
         path: '/rides/post',
-        builder: (context, state) => const _PostRidePlaceholder(),
+        builder: (context, state) => const PostRideScreen(),
       ),
       GoRoute(
         path: '/rides/post/pick-location',
-        builder: (context, state) => const _MapPinPickerPlaceholder(),
+        builder: (context, state) => MapPinPickerScreen(
+          mode: state.uri.queryParameters['mode'] ?? 'origin',
+        ),
       ),
       GoRoute(
         path: '/rides/:rideId',
@@ -142,27 +146,8 @@ class _RidesPlaceholder extends StatelessWidget {
   }
 }
 
-class _PostRidePlaceholder extends StatelessWidget {
-  const _PostRidePlaceholder();
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(child: Text('Post Ride - Coming Soon')),
-    );
-  }
-}
-
-class _MapPinPickerPlaceholder extends StatelessWidget {
-  const _MapPinPickerPlaceholder();
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(child: Text('Pick Location - Coming Soon')),
-    );
-  }
-}
+// _PostRidePlaceholder and _MapPinPickerPlaceholder replaced by real
+// screens: PostRideScreen and MapPinPickerScreen (Plan 02-02).
 
 class _RideDetailPlaceholder extends StatelessWidget {
   const _RideDetailPlaceholder({required this.rideId});
