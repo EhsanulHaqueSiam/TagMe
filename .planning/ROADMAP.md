@@ -67,7 +67,7 @@ Plans:
 **Plans**: 4 plans
 Plans:
 - [x] 03-01-PLAN.md -- Chat data foundation: dependencies, Freezed models, ChatRepository, chat providers
-- [ ] 03-02-PLAN.md -- Chat UI: screens, widgets, navigation integration, join request conversation creation
+- [x] 03-02-PLAN.md -- Chat UI: screens, widgets, navigation integration, join request conversation creation
 - [x] 03-03-PLAN.md -- Notification services: FCM token management, local departure reminders, app startup wiring
 - [ ] 03-04-PLAN.md -- Cloud Functions: server-side FCM triggers for chat messages and ride match notifications
 **UI hint**: yes
@@ -92,5 +92,5 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 |-------|----------------|--------|-----------|
 | 1. Map & Profiles | 4/4 | Complete | 2026-03-27 |
 | 2. Rides & Matching | 0/5 | Planning complete | - |
-| 3. Chat & Notifications | 0/4 | Planning complete | - |
+| 3. Chat & Notifications | 3/4 | In Progress|  |
 | 4. Play Store Launch | 0/TBD | Not started | - |

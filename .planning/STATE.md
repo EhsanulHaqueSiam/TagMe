@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 03-03-PLAN.md
-last_updated: "2026-03-27T06:58:19.015Z"
+stopped_at: Completed 03-02-PLAN.md
+last_updated: "2026-03-27T07:04:23.887Z"
 last_activity: 2026-03-27
 progress:
   total_phases: 4
   completed_phases: 2
   total_plans: 13
-  completed_plans: 11
+  completed_plans: 12
   percent: 0
 ---
 
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-03-27)
 ## Current Position
 
 Phase: 03 (chat-notifications) — EXECUTING
-Plan: 3 of 4
+Plan: 4 of 4
 Status: Ready to execute
 Last activity: 2026-03-27
 
@@ -63,6 +63,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 02-rides-matching P05 | 9min | 2 tasks | 9 files |
 | Phase 03-chat-notifications P01 | 4min | 2 tasks | 7 files |
 | Phase 03-chat-notifications P03 | 4min | 2 tasks | 4 files |
+| Phase 03-chat-notifications P02 | 8min | 2 tasks | 12 files |
 
 ## Accumulated Context
 
@@ -97,6 +98,8 @@ Recent decisions affecting current work:
 - [Phase 03-chat-notifications]: timezone ^0.11.0 instead of ^0.10.0 (required by flutter_local_notifications 21)
 - [Phase 03-chat-notifications]: Conversations + messages subcollection pattern for Firestore chat; batch writes for message send + metadata update
 - [Phase 03-chat-notifications]: flutter_local_notifications v21 uses all-named-parameter API (not positional like older versions)
+- [Phase 03-chat-notifications]: Extended Conversation model with participantNames/participantUniversities maps for chat list display
+- [Phase 03-chat-notifications]: Conversation creation happens OUTSIDE Firestore transaction in acceptRequest to avoid nested operations
 
 ### Pending Todos
 
@@ -110,6 +113,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-27T06:58:19.014Z
-Stopped at: Completed 03-03-PLAN.md
+Last session: 2026-03-27T07:04:23.885Z
+Stopped at: Completed 03-02-PLAN.md
 Resume file: None
