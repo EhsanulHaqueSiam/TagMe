@@ -17,6 +17,7 @@ import 'package:tagme/features/rides/presentation/screens/ride_detail_screen.dar
 import 'package:tagme/features/chat/presentation/screens/chat_list_screen.dart';
 import 'package:tagme/features/chat/presentation/screens/chat_screen.dart';
 import 'package:tagme/features/rides/presentation/screens/rides_tab_screen.dart';
+import 'package:tagme/features/settings/presentation/screens/settings_screen.dart';
 
 part 'router.g.dart';
 
@@ -73,6 +74,16 @@ GoRouter router(Ref ref) {
       GoRoute(
         path: '/profile-edit',
         builder: (context, state) => const ProfileEditScreen(),
+      ),
+      GoRoute(
+        path: '/settings',
+        builder: (context, state) => const SettingsScreen(),
+      ),
+      GoRoute(
+        path: '/legal/:type',
+        builder: (context, state) => const Scaffold(
+          body: Center(child: Text('Legal document placeholder')),
+        ),
       ),
 
       // Bottom navigation shell with Map and Rides tabs.
