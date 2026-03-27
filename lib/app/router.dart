@@ -11,6 +11,10 @@ import 'package:tagme/features/profile/providers/profile_provider.dart';
 import 'package:tagme/features/rides/presentation/screens/map_pin_picker_screen.dart';
 import 'package:tagme/features/rides/presentation/screens/post_ride_screen.dart';
 import 'package:tagme/features/rides/presentation/screens/ride_search_screen.dart';
+import 'package:tagme/features/fares/presentation/screens/fare_history_screen.dart';
+import 'package:tagme/features/rides/presentation/screens/join_requests_screen.dart';
+import 'package:tagme/features/rides/presentation/screens/recurring_schedule_screen.dart';
+import 'package:tagme/features/rides/presentation/screens/ride_detail_screen.dart';
 import 'package:tagme/features/rides/presentation/screens/rides_tab_screen.dart';
 
 part 'router.g.dart';
@@ -107,13 +111,13 @@ GoRouter router(Ref ref) {
       ),
       GoRoute(
         path: '/rides/:rideId',
-        builder: (context, state) => _RideDetailPlaceholder(
+        builder: (context, state) => RideDetailScreen(
           rideId: state.pathParameters['rideId']!,
         ),
       ),
       GoRoute(
         path: '/rides/:rideId/requests',
-        builder: (context, state) => _JoinRequestsPlaceholder(
+        builder: (context, state) => JoinRequestsScreen(
           rideId: state.pathParameters['rideId']!,
         ),
       ),
@@ -123,68 +127,24 @@ GoRouter router(Ref ref) {
       ),
       GoRoute(
         path: '/rides/schedule',
-        builder: (context, state) => const _RecurringSchedulePlaceholder(),
+        builder: (context, state) => const RecurringScheduleScreen(),
       ),
       GoRoute(
         path: '/fares',
-        builder: (context, state) => const _FareHistoryPlaceholder(),
+        builder: (context, state) => const FareHistoryScreen(),
       ),
     ],
   );
 }
 
 // ---------------------------------------------------------------------------
-// Placeholder screens — replaced by real screens in Plans 02-05.
+// All Phase 2 placeholders replaced by real screens:
+// - _RidesPlaceholder -> RidesTabScreen (Plan 02-03)
+// - _PostRidePlaceholder -> PostRideScreen (Plan 02-02)
+// - _MapPinPickerPlaceholder -> MapPinPickerScreen (Plan 02-02)
+// - _RideDetailPlaceholder -> RideDetailScreen (Plan 02-04)
+// - _JoinRequestsPlaceholder -> JoinRequestsScreen (Plan 02-04)
+// - _RideSearchPlaceholder -> RideSearchScreen (Plan 02-03)
+// - _RecurringSchedulePlaceholder -> RecurringScheduleScreen (Plan 02-05)
+// - _FareHistoryPlaceholder -> FareHistoryScreen (Plan 02-05)
 // ---------------------------------------------------------------------------
-
-// _RidesPlaceholder replaced by RidesTabScreen (Plan 02-03).
-// _PostRidePlaceholder and _MapPinPickerPlaceholder replaced by real
-// screens: PostRideScreen and MapPinPickerScreen (Plan 02-02).
-
-class _RideDetailPlaceholder extends StatelessWidget {
-  const _RideDetailPlaceholder({required this.rideId});
-  final String rideId;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(child: Text('Ride Detail $rideId - Coming Soon')),
-    );
-  }
-}
-
-class _JoinRequestsPlaceholder extends StatelessWidget {
-  const _JoinRequestsPlaceholder({required this.rideId});
-  final String rideId;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(child: Text('Join Requests $rideId - Coming Soon')),
-    );
-  }
-}
-
-// _RideSearchPlaceholder replaced by RideSearchScreen (Plan 02-03).
-
-class _RecurringSchedulePlaceholder extends StatelessWidget {
-  const _RecurringSchedulePlaceholder();
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(child: Text('Recurring Schedule - Coming Soon')),
-    );
-  }
-}
-
-class _FareHistoryPlaceholder extends StatelessWidget {
-  const _FareHistoryPlaceholder();
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(child: Text('Fare History - Coming Soon')),
-    );
-  }
-}
