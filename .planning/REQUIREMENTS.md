@@ -54,7 +54,7 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Play Store Readiness
 
-- [ ] **STORE-01**: App has polished UI suitable for Play Store listing
+- [x] **STORE-01**: App has polished UI suitable for Play Store listing
 - [ ] **STORE-02**: App includes privacy policy and terms of service
 - [ ] **STORE-03**: App passes Google Play pre-launch report (no crashes, no policy violations)
 
@@ -130,7 +130,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | CHAT-03 | Phase 3 | Complete |
 | CHAT-04 | Phase 3 | Complete |
 | CHAT-05 | Phase 3 | Complete |
-| STORE-01 | Phase 4 | Pending |
+| STORE-01 | Phase 4 | Complete |
 | STORE-02 | Phase 4 | Pending |
 | STORE-03 | Phase 4 | Pending |
 
