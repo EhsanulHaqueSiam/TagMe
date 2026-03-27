@@ -82,7 +82,7 @@ Plans:
   3. App passes Google Play pre-launch report with no crashes and no policy violations (no background location, correct targetSdk, AAB format)
 **Plans**: 3 plans
 Plans:
-- [ ] 04-01-PLAN.md -- Settings screen, Stadia Maps tile provider switch, app label fix
+- [x] 04-01-PLAN.md -- Settings screen, Stadia Maps tile provider switch, app label fix
 - [ ] 04-02-PLAN.md -- Privacy policy and terms of service as bundled HTML assets with rendering screen
 - [ ] 04-03-PLAN.md -- Release build signing, Firebase init, app icon/splash config, Play Store readiness
 **UI hint**: yes

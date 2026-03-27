@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:tagme/core/constants/app_colors.dart';
+import 'package:tagme/core/constants/tile_config.dart';
 import 'package:tagme/core/constants/app_spacing.dart';
 import 'package:tagme/core/constants/transport_types.dart';
 import 'package:tagme/features/fares/data/services/fare_calculator.dart';
@@ -295,8 +296,9 @@ class _RideDetailScreenState extends ConsumerState<RideDetailScreen>
             ),
             children: [
               TileLayer(
-                urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                userAgentPackageName: 'com.tagme.app',
+                urlTemplate: TileConfig.stadiaMapsTemplate,
+                userAgentPackageName: TileConfig.userAgentPackageName,
+                maxZoom: TileConfig.maxZoom,
               ),
               if (polylinePoints.length >= 2)
                 PolylineLayer(

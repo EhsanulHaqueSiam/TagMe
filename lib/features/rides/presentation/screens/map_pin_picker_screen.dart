@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:tagme/core/constants/app_colors.dart';
+import 'package:tagme/core/constants/tile_config.dart';
 import 'package:tagme/core/constants/app_spacing.dart';
 import 'package:tagme/features/map/providers/location_provider.dart';
 import 'package:tagme/features/rides/data/services/route_service.dart';
@@ -119,10 +120,9 @@ class _MapPinPickerScreenState extends ConsumerState<MapPinPickerScreen> {
             ),
             children: [
               TileLayer(
-                urlTemplate:
-                    'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                userAgentPackageName: 'com.tagme.app',
-                maxZoom: 19,
+                urlTemplate: TileConfig.stadiaMapsTemplate,
+                userAgentPackageName: TileConfig.userAgentPackageName,
+                maxZoom: TileConfig.maxZoom,
               ),
             ],
           ),

@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: verifying
-stopped_at: Completed 03-04-PLAN.md
-last_updated: "2026-03-27T07:10:45.607Z"
+stopped_at: Completed 04-01-PLAN.md
+last_updated: "2026-03-27T19:18:13.089Z"
 last_activity: 2026-03-27
 progress:
   total_phases: 4
-  completed_phases: 3
-  total_plans: 13
+  completed_phases: 2
+  total_plans: 12
   completed_plans: 13
   percent: 0
 ---
@@ -65,6 +65,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 03-chat-notifications P03 | 4min | 2 tasks | 4 files |
 | Phase 03-chat-notifications P02 | 8min | 2 tasks | 12 files |
 | Phase 03-chat-notifications P04 | 3min | 2 tasks | 8 files |
+| Phase 04-play-store-launch P01 | 2min | 2 tasks | 11 files |
 
 ## Accumulated Context
 
@@ -103,6 +104,8 @@ Recent decisions affecting current work:
 - [Phase 03-chat-notifications]: Conversation creation happens OUTSIDE Firestore transaction in acceptRequest to avoid nested operations
 - [Phase 03-chat-notifications]: Used FieldValue.increment(1) for atomic unread count in Cloud Functions (avoids read-then-write race)
 - [Phase 03-chat-notifications]: Cloud Functions handle nested origin.address field path (from RideRepository geo maps) with flat field fallback
+- [Phase 04-play-store-launch]: Stadia Maps OSM Bright tiles replace raw OSM (free 200K/month, no API key for mobile)
+- [Phase 04-play-store-launch]: TileConfig centralized in single file to avoid URL duplication across 3 map screens
 
 ### Pending Todos
 
@@ -116,6 +119,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-27T07:10:45.605Z
-Stopped at: Completed 03-04-PLAN.md
+Last session: 2026-03-27T19:18:13.087Z
+Stopped at: Completed 04-01-PLAN.md
 Resume file: None

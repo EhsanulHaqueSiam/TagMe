@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:tagme/core/constants/app_colors.dart';
+import 'package:tagme/core/constants/tile_config.dart';
 import 'package:tagme/features/map/presentation/widgets/map_top_bar.dart';
 import 'package:tagme/features/map/presentation/widgets/my_location_fab.dart';
 import 'package:tagme/features/map/presentation/widgets/student_bottom_sheet.dart';
@@ -16,7 +17,7 @@ import 'package:tagme/features/profile/data/models/student.dart';
 /// Fallback center when GPS is not yet available (Dhaka, Bangladesh).
 const _dhakaCenter = LatLng(23.8103, 90.4125);
 
-/// Full-screen map with OSM tiles, user location blue dot, nearby student
+/// Full-screen map with Stadia Maps tiles, user location blue dot, nearby student
 /// markers with clustering, top bar, and FAB.
 ///
 /// Centers on the user's GPS location at zoom 13. Nearby student markers
@@ -102,12 +103,11 @@ class _MapScreenState extends ConsumerState<MapScreen> {
               initialZoom: 13.0,
             ),
             children: [
-              // OSM tile layer
+              // Stadia Maps tile layer
               TileLayer(
-                urlTemplate:
-                    'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                userAgentPackageName: 'com.tagme.app',
-                maxZoom: 19,
+                urlTemplate: TileConfig.stadiaMapsTemplate,
+                userAgentPackageName: TileConfig.userAgentPackageName,
+                maxZoom: TileConfig.maxZoom,
               ),
 
               // User location blue dot marker (separate from cluster layer)
