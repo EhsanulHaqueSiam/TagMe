@@ -47,7 +47,13 @@ Plans:
   3. System matches rides by origin proximity, destination proximity, and time overlap -- student can accept or decline matches
   4. Student can set up a recurring ride schedule and the system auto-posts rides based on that schedule
   5. Student can see estimated fare per transport type and cost-per-person split, view fare history, and track outstanding balances with co-riders
-**Plans**: TBD
+**Plans**: 5 plans
+Plans:
+- [ ] 02-01-PLAN.md -- Data foundation: Freezed models, TransportType enum, ORS route service, fare calculator, repositories, bottom nav shell
+- [ ] 02-02-PLAN.md -- Ride posting: PostRideScreen form, MapPinPickerScreen, transport selector, seat stepper, ride providers
+- [ ] 02-03-PLAN.md -- Rides list and search: RideCard, RidesTabScreen (Nearby/My Rides), RideSearchScreen with matching
+- [ ] 02-04-PLAN.md -- Ride detail and join requests: RideDetailScreen, JoinRequestsScreen, accept/decline with atomic seat update
+- [ ] 02-05-PLAN.md -- Schedules and fares: RecurringScheduleScreen, auto-post logic, FareHistoryScreen, balance tracking
 **UI hint**: yes
 
 ### Phase 3: Chat & Notifications
@@ -79,7 +85,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Map & Profiles | 0/4 | Planning complete | - |
-| 2. Rides & Matching | 0/TBD | Not started | - |
+| 1. Map & Profiles | 4/4 | Complete | 2026-03-27 |
+| 2. Rides & Matching | 0/5 | Planning complete | - |
 | 3. Chat & Notifications | 0/TBD | Not started | - |
 | 4. Play Store Launch | 0/TBD | Not started | - |
