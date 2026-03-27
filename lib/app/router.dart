@@ -14,6 +14,8 @@ import 'package:tagme/features/fares/presentation/screens/fare_history_screen.da
 import 'package:tagme/features/rides/presentation/screens/join_requests_screen.dart';
 import 'package:tagme/features/rides/presentation/screens/recurring_schedule_screen.dart';
 import 'package:tagme/features/rides/presentation/screens/ride_detail_screen.dart';
+import 'package:tagme/features/chat/presentation/screens/chat_list_screen.dart';
+import 'package:tagme/features/chat/presentation/screens/chat_screen.dart';
 import 'package:tagme/features/rides/presentation/screens/rides_tab_screen.dart';
 
 part 'router.g.dart';
@@ -94,7 +96,23 @@ GoRouter router(Ref ref) {
               ),
             ],
           ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/chats',
+                builder: (context, state) => const ChatListScreen(),
+              ),
+            ],
+          ),
         ],
+      ),
+
+      // Full-screen chat route (no bottom nav).
+      GoRoute(
+        path: '/chats/:conversationId',
+        builder: (context, state) => ChatScreen(
+          conversationId: state.pathParameters['conversationId']!,
+        ),
       ),
 
       // Full-screen Phase 2 routes (no bottom nav).

@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:tagme/core/constants/app_colors.dart';
 import 'package:tagme/core/constants/app_spacing.dart';
 import 'package:tagme/features/rides/data/models/join_request.dart';
+import 'package:tagme/features/profile/providers/profile_provider.dart';
 import 'package:tagme/features/rides/data/repositories/join_request_repository.dart';
 import 'package:tagme/features/rides/providers/ride_providers.dart';
 
@@ -123,7 +124,20 @@ class _JoinRequestsScreenState extends ConsumerState<JoinRequestsScreen>
 
     try {
       final repo = ref.read(joinRequestRepositoryProvider);
-      await repo.acceptRequest(request.id!, widget.rideId);
+      final ride =
+          await ref.read(rideDetailProvider(widget.rideId).future);
+      final profile = ref.read(profileProvider).value;
+
+      await repo.acceptRequest(
+        request.id!,
+        widget.rideId,
+        posterName: profile?.name ?? '',
+        posterUniversity: profile?.university ?? '',
+        rideOrigin: ride?.originAddress ?? '',
+        rideDestination: ride?.destinationAddress ?? '',
+        rideTransportType: ride?.transportType ?? '',
+        rideDepartureTime: ride?.departureTime ?? DateTime.now(),
+      );
 
       setState(() {
         _processingIds.remove(request.id!);

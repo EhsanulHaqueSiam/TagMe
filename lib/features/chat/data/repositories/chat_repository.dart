@@ -35,6 +35,10 @@ class ChatRepository {
     required String rideDestination,
     required String rideTransportType,
     required DateTime rideDepartureTime,
+    required String posterName,
+    required String posterUniversity,
+    required String requesterName,
+    required String requesterUniversity,
   }) async {
     // Check if conversation already exists for this ride + participants.
     final existing = await _conversationsCollection
@@ -57,6 +61,11 @@ class ChatRepository {
       'rideDestination': rideDestination,
       'rideTransportType': rideTransportType,
       'rideDepartureTime': Timestamp.fromDate(rideDepartureTime),
+      'participantNames': {posterId: posterName, requesterId: requesterName},
+      'participantUniversities': {
+        posterId: posterUniversity,
+        requesterId: requesterUniversity,
+      },
       'lastMessage': 'Ride match! Start chatting.',
       'lastMessageAt': FieldValue.serverTimestamp(),
       'lastSenderId': '',

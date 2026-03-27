@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:tagme/features/chat/data/repositories/chat_repository.dart';
 import 'package:tagme/features/rides/data/models/join_request.dart';
 
 part 'join_request_repository.g.dart';
@@ -59,7 +60,23 @@ class JoinRequestRepository {
   /// Atomically: reads the ride doc, checks seat availability, increments
   /// filledSeats, sets ride to 'full' if needed, updates request status, and
   /// adds the rider to the `rides/{rideId}/riders` subcollection.
-  Future<void> acceptRequest(String requestId, String rideId) async {
+  /// After the transaction, creates a chat conversation between the two users.
+  Future<void> acceptRequest(
+    String requestId,
+    String rideId, {
+    required String posterName,
+    required String posterUniversity,
+    required String rideOrigin,
+    required String rideDestination,
+    required String rideTransportType,
+    required DateTime rideDepartureTime,
+  }) async {
+    // Variables extracted from transaction for post-transaction use.
+    String? posterId;
+    String? requesterId;
+    String? requesterName;
+    String? requesterUniversity;
+
     await _firestore.runTransaction((transaction) async {
       // Read ride document.
       final rideRef = _firestore.collection('rides').doc(rideId);
@@ -67,6 +84,7 @@ class JoinRequestRepository {
       if (!rideDoc.exists) throw Exception('Ride not found');
 
       final rideData = rideDoc.data()!;
+      posterId = rideData['posterId'] as String?;
       final filledSeats = (rideData['filledSeats'] as num?)?.toInt() ?? 0;
       final totalSeats = (rideData['totalSeats'] as num?)?.toInt() ?? 0;
 
@@ -95,9 +113,12 @@ class JoinRequestRepository {
       final requestDoc = await transaction.get(requestRef);
       final requestData = requestDoc.data();
 
+      requesterId = requestData?['requesterId'] as String?;
+      requesterName = requestData?['requesterName'] as String?;
+      requesterUniversity = requestData?['requesterUniversity'] as String?;
+
       // Add rider to subcollection.
-      final riderId = requestData?['requesterId'] as String?;
-      final riderRef = rideRef.collection('riders').doc(riderId);
+      final riderRef = rideRef.collection('riders').doc(requesterId);
       transaction.set(riderRef, {
         'requesterId': requestData?['requesterId'],
         'requesterName': requestData?['requesterName'],
@@ -106,6 +127,24 @@ class JoinRequestRepository {
         'joinedAt': FieldValue.serverTimestamp(),
       });
     });
+
+    // Create conversation AFTER transaction completes successfully.
+    if (posterId != null && requesterId != null) {
+      final chatRepo = ChatRepository(firestore: _firestore);
+      await chatRepo.createConversation(
+        rideId: rideId,
+        posterId: posterId!,
+        requesterId: requesterId!,
+        posterName: posterName,
+        posterUniversity: posterUniversity,
+        requesterName: requesterName ?? '',
+        requesterUniversity: requesterUniversity ?? '',
+        rideOrigin: rideOrigin,
+        rideDestination: rideDestination,
+        rideTransportType: rideTransportType,
+        rideDepartureTime: rideDepartureTime,
+      );
+    }
   }
 
   /// Declines a join request.
