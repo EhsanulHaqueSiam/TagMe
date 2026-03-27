@@ -182,6 +182,22 @@ class ChatRepository {
       );
     }
 
+    // Ensure participantNames and participantUniversities are String maps.
+    if (data['participantNames'] is Map) {
+      data['participantNames'] = Map<String, String>.from(
+        (data['participantNames'] as Map).map(
+          (key, value) => MapEntry(key.toString(), value.toString()),
+        ),
+      );
+    }
+    if (data['participantUniversities'] is Map) {
+      data['participantUniversities'] = Map<String, String>.from(
+        (data['participantUniversities'] as Map).map(
+          (key, value) => MapEntry(key.toString(), value.toString()),
+        ),
+      );
+    }
+
     return Conversation.fromJson(data);
   }
 

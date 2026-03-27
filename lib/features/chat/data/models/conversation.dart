@@ -16,6 +16,8 @@ abstract class Conversation with _$Conversation {
     String? lastMessage,
     String? lastSenderId,
     @Default({}) Map<String, int> unreadCounts,
+    @Default({}) Map<String, String> participantNames,
+    @Default({}) Map<String, String> participantUniversities,
     DateTime? lastMessageAt,
     DateTime? rideDepartureTime,
     DateTime? createdAt,
