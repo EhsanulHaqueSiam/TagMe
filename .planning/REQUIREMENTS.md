@@ -29,8 +29,8 @@ Requirements for initial release. Each maps to roadmap phases.
 - [x] **RIDE-05**: Student can set available seats based on transport capacity
 - [x] **RIDE-06**: System matches rides by proximity (origin near origin, destination near destination, time overlap)
 - [x] **RIDE-07**: Student can accept or decline a ride match
-- [ ] **RIDE-08**: Student can set recurring ride schedule (e.g., MWF at 8am, same route)
-- [ ] **RIDE-09**: System auto-posts rides based on recurring schedule
+- [x] **RIDE-08**: Student can set recurring ride schedule (e.g., MWF at 8am, same route)
+- [x] **RIDE-09**: System auto-posts rides based on recurring schedule
 
 ### Communication
 
@@ -43,9 +43,9 @@ Requirements for initial release. Each maps to roadmap phases.
 ### Fare
 
 - [x] **FARE-01**: App estimates fare per transport type based on route distance
-- [ ] **FARE-02**: App calculates cost-per-person split based on number of riders
-- [ ] **FARE-03**: App tracks fare splits across multiple rides (running tab between frequent co-riders)
-- [ ] **FARE-04**: Student can view fare history and outstanding balances with co-riders
+- [x] **FARE-02**: App calculates cost-per-person split based on number of riders
+- [x] **FARE-03**: App tracks fare splits across multiple rides (running tab between frequent co-riders)
+- [x] **FARE-04**: Student can view fare history and outstanding balances with co-riders
 
 ### Matching Preferences
 
@@ -117,12 +117,12 @@ Which phases cover which requirements. Updated during roadmap creation.
 | RIDE-05 | Phase 2 | Complete |
 | RIDE-06 | Phase 2 | Complete |
 | RIDE-07 | Phase 2 | Complete |
-| RIDE-08 | Phase 2 | Pending |
-| RIDE-09 | Phase 2 | Pending |
+| RIDE-08 | Phase 2 | Complete |
+| RIDE-09 | Phase 2 | Complete |
 | FARE-01 | Phase 2 | Complete |
-| FARE-02 | Phase 2 | Pending |
-| FARE-03 | Phase 2 | Pending |
-| FARE-04 | Phase 2 | Pending |
+| FARE-02 | Phase 2 | Complete |
+| FARE-03 | Phase 2 | Complete |
+| FARE-04 | Phase 2 | Complete |
 | PREF-01 | Phase 2 | Complete |
 | PREF-02 | Phase 2 | Complete |
 | CHAT-01 | Phase 3 | Pending |
