@@ -22,7 +22,7 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Rides
 
-- [ ] **RIDE-01**: Student can post a ride with origin, destination, departure time, and transport type
+- [x] **RIDE-01**: Student can post a ride with origin, destination, departure time, and transport type
 - [ ] **RIDE-02**: Student can search for rides by route, time, and transport type
 - [x] **RIDE-03**: Student can select transport type: rickshaw, bike, bus, car, CNG
 - [x] **RIDE-04**: Student can optionally tag ride-hailing services: Pathao, Uber, Obhai
@@ -110,7 +110,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | PROF-01 | Phase 1 | Complete |
 | PROF-02 | Phase 1 | Complete |
 | PROF-03 | Phase 1 | Complete |
-| RIDE-01 | Phase 2 | Pending |
+| RIDE-01 | Phase 2 | Complete |
 | RIDE-02 | Phase 2 | Pending |
 | RIDE-03 | Phase 2 | Complete |
 | RIDE-04 | Phase 2 | Complete |
