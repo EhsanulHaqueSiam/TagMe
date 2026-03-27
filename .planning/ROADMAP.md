@@ -83,8 +83,8 @@ Plans:
 **Plans**: 3 plans
 Plans:
 - [x] 04-01-PLAN.md -- Settings screen, Stadia Maps tile provider switch, app label fix
-- [ ] 04-02-PLAN.md -- Privacy policy and terms of service as bundled HTML assets with rendering screen
-- [ ] 04-03-PLAN.md -- Release build signing, Firebase init, app icon/splash config, Play Store readiness
+- [x] 04-02-PLAN.md -- Privacy policy and terms of service as bundled HTML assets with rendering screen
+- [x] 04-03-PLAN.md -- Release build signing, Firebase init, app icon/splash config, Play Store readiness
 **UI hint**: yes
 
 ## Progress

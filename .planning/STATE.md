@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: verifying
-stopped_at: Completed 04-01-PLAN.md
-last_updated: "2026-03-27T19:18:13.089Z"
+status: executing
+stopped_at: Completed 04-03-PLAN.md
+last_updated: "2026-03-27T19:24:31.585Z"
 last_activity: 2026-03-27
 progress:
   total_phases: 4
-  completed_phases: 2
-  total_plans: 12
-  completed_plans: 13
+  completed_phases: 4
+  total_plans: 16
+  completed_plans: 16
   percent: 0
 ---
 
@@ -21,13 +21,13 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-27)
 
 **Core value:** Students can quickly find verified fellow students heading the same way and share a ride
-**Current focus:** Phase 03 — chat-notifications
+**Current focus:** Phase 04 — play-store-launch
 
 ## Current Position
 
-Phase: 03 (chat-notifications) — EXECUTING
-Plan: 4 of 4
-Status: Phase complete — ready for verification
+Phase: 04 (play-store-launch) — EXECUTING
+Plan: 3 of 3
+Status: Ready to execute
 Last activity: 2026-03-27
 
 Progress: [░░░░░░░░░░] 0%
@@ -65,7 +65,8 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 03-chat-notifications P03 | 4min | 2 tasks | 4 files |
 | Phase 03-chat-notifications P02 | 8min | 2 tasks | 12 files |
 | Phase 03-chat-notifications P04 | 3min | 2 tasks | 8 files |
-| Phase 04-play-store-launch P01 | 2min | 2 tasks | 11 files |
+| Phase 04-play-store-launch P02 | 3min | 2 tasks | 5 files |
+| Phase 04-play-store-launch P03 | 2min | 2 tasks | 8 files |
 
 ## Accumulated Context
 
@@ -104,8 +105,11 @@ Recent decisions affecting current work:
 - [Phase 03-chat-notifications]: Conversation creation happens OUTSIDE Firestore transaction in acceptRequest to avoid nested operations
 - [Phase 03-chat-notifications]: Used FieldValue.increment(1) for atomic unread count in Cloud Functions (avoids read-then-write race)
 - [Phase 03-chat-notifications]: Cloud Functions handle nested origin.address field path (from RideRepository geo maps) with flat field fallback
-- [Phase 04-play-store-launch]: Stadia Maps OSM Bright tiles replace raw OSM (free 200K/month, no API key for mobile)
-- [Phase 04-play-store-launch]: TileConfig centralized in single file to avoid URL duplication across 3 map screens
+- [Phase 04-play-store-launch]: Built simple HTML-to-widgets parser instead of adding flutter_html dependency (zero new deps for legal docs)
+- [Phase 04-play-store-launch]: Bundled legal docs as assets for offline availability (no external URL dependency)
+- [Phase 04-play-store-launch]: Conditional signing: release config when key.properties exists, debug fallback when not
+- [Phase 04-play-store-launch]: Firebase init wrapped in try-catch so app runs without firebase_options.dart configured
+- [Phase 04-play-store-launch]: Stub firebase_options.dart throws UnsupportedError with instructions to run flutterfire configure
 
 ### Pending Todos
 
@@ -119,6 +123,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-27T19:18:13.087Z
-Stopped at: Completed 04-01-PLAN.md
+Last session: 2026-03-27T19:24:31.583Z
+Stopped at: Completed 04-03-PLAN.md
 Resume file: None
