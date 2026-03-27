@@ -80,7 +80,11 @@ Plans:
   1. App has a polished, consistent UI across all screens suitable for a Play Store listing
   2. App includes a hosted privacy policy and terms of service accessible from within the app
   3. App passes Google Play pre-launch report with no crashes and no policy violations (no background location, correct targetSdk, AAB format)
-**Plans**: TBD
+**Plans**: 3 plans
+Plans:
+- [ ] 04-01-PLAN.md -- Settings screen, Stadia Maps tile provider switch, app label fix
+- [ ] 04-02-PLAN.md -- Privacy policy and terms of service as bundled HTML assets with rendering screen
+- [ ] 04-03-PLAN.md -- Release build signing, Firebase init, app icon/splash config, Play Store readiness
 **UI hint**: yes
 
 ## Progress
@@ -93,4 +97,4 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 | 1. Map & Profiles | 4/4 | Complete | 2026-03-27 |
 | 2. Rides & Matching | 0/5 | Planning complete | - |
 | 3. Chat & Notifications | 3/4 | In Progress|  |
-| 4. Play Store Launch | 0/TBD | Not started | - |
+| 4. Play Store Launch | 0/3 | Planning complete | - |
