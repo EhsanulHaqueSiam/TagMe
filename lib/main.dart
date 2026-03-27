@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -8,14 +9,20 @@ import 'package:tagme/features/notifications/data/services/fcm_service.dart';
 import 'package:tagme/features/notifications/data/services/local_notification_service.dart';
 import 'package:tagme/features/rides/providers/schedule_providers.dart';
 
+import 'firebase_options.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // TODO(plan-02): Uncomment after running `flutterfire configure`
-  // which generates firebase_options.dart
-  // await Firebase.initializeApp(
-  //   options: DefaultFirebaseOptions.currentPlatform,
-  // );
+  // Initialize Firebase. Run `flutterfire configure` to generate
+  // firebase_options.dart if it does not exist yet.
+  try {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+  } on Exception catch (e) {
+    debugPrint('Firebase init failed: $e — app will run with limited functionality');
+  }
 
   // Initialize local notification service (no Firebase dependency).
   final localNotificationService = LocalNotificationService();
