@@ -23,11 +23,11 @@ Requirements for initial release. Each maps to roadmap phases.
 ### Rides
 
 - [x] **RIDE-01**: Student can post a ride with origin, destination, departure time, and transport type
-- [ ] **RIDE-02**: Student can search for rides by route, time, and transport type
+- [x] **RIDE-02**: Student can search for rides by route, time, and transport type
 - [x] **RIDE-03**: Student can select transport type: rickshaw, bike, bus, car, CNG
 - [x] **RIDE-04**: Student can optionally tag ride-hailing services: Pathao, Uber, Obhai
 - [x] **RIDE-05**: Student can set available seats based on transport capacity
-- [ ] **RIDE-06**: System matches rides by proximity (origin near origin, destination near destination, time overlap)
+- [x] **RIDE-06**: System matches rides by proximity (origin near origin, destination near destination, time overlap)
 - [ ] **RIDE-07**: Student can accept or decline a ride match
 - [ ] **RIDE-08**: Student can set recurring ride schedule (e.g., MWF at 8am, same route)
 - [ ] **RIDE-09**: System auto-posts rides based on recurring schedule
@@ -49,8 +49,8 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Matching Preferences
 
-- [ ] **PREF-01**: Student can set gender preference for co-riders (prefer same gender)
-- [ ] **PREF-02**: Matching algorithm weighs gender preference when ranking matches
+- [x] **PREF-01**: Student can set gender preference for co-riders (prefer same gender)
+- [x] **PREF-02**: Matching algorithm weighs gender preference when ranking matches
 
 ### Play Store Readiness
 
@@ -111,11 +111,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 | PROF-02 | Phase 1 | Complete |
 | PROF-03 | Phase 1 | Complete |
 | RIDE-01 | Phase 2 | Complete |
-| RIDE-02 | Phase 2 | Pending |
+| RIDE-02 | Phase 2 | Complete |
 | RIDE-03 | Phase 2 | Complete |
 | RIDE-04 | Phase 2 | Complete |
 | RIDE-05 | Phase 2 | Complete |
-| RIDE-06 | Phase 2 | Pending |
+| RIDE-06 | Phase 2 | Complete |
 | RIDE-07 | Phase 2 | Pending |
 | RIDE-08 | Phase 2 | Pending |
 | RIDE-09 | Phase 2 | Pending |
@@ -123,8 +123,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | FARE-02 | Phase 2 | Pending |
 | FARE-03 | Phase 2 | Pending |
 | FARE-04 | Phase 2 | Pending |
-| PREF-01 | Phase 2 | Pending |
-| PREF-02 | Phase 2 | Pending |
+| PREF-01 | Phase 2 | Complete |
+| PREF-02 | Phase 2 | Complete |
 | CHAT-01 | Phase 3 | Pending |
 | CHAT-02 | Phase 3 | Pending |
 | CHAT-03 | Phase 3 | Pending |
