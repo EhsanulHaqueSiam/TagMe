@@ -21,6 +21,7 @@ import 'package:tagme/features/chat/presentation/screens/chat_screen.dart';
 import 'package:tagme/features/rides/presentation/screens/rides_tab_screen.dart';
 import 'package:tagme/features/settings/presentation/screens/legal_document_screen.dart';
 import 'package:tagme/features/settings/presentation/screens/settings_screen.dart';
+import 'package:tagme/features/location_sharing/presentation/screens/place_search_screen.dart';
 
 part 'router.g.dart';
 
@@ -82,6 +83,10 @@ GoRouter router(Ref ref) {
       GoRoute(
         path: '/settings',
         builder: (context, state) => const SettingsScreen(),
+      ),
+      GoRoute(
+        path: '/places/search',
+        builder: (context, state) => const PlaceSearchScreen(),
       ),
       // Bottom navigation shell with Map and Rides tabs.
       StatefulShellRoute.indexedStack(
