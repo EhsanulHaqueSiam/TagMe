@@ -120,6 +120,9 @@ class ChatRepository {
     required String text,
     String type = 'text',
     String? phoneNumber,
+    double? latitude,
+    double? longitude,
+    String? locationLabel,
   }) async {
     final batch = _firestore.batch();
 
@@ -135,11 +138,18 @@ class ChatRepository {
         'text': text,
         'type': type,
         if (phoneNumber != null) 'phoneNumber': phoneNumber,
+        if (latitude != null) 'latitude': latitude,
+        if (longitude != null) 'longitude': longitude,
+        if (locationLabel != null) 'locationLabel': locationLabel,
         'createdAt': FieldValue.serverTimestamp(),
       })
       // Update conversation metadata.
       ..update(_conversationsCollection.doc(conversationId), {
-        'lastMessage': type == 'phone_shared' ? 'Shared phone number' : text,
+        'lastMessage': type == 'phone_shared'
+            ? 'Shared phone number'
+            : type == 'location_shared'
+                ? 'Shared a location'
+                : text,
         'lastMessageAt': FieldValue.serverTimestamp(),
         'lastSenderId': senderId,
       });
