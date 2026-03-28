@@ -13,5 +13,5 @@ abstract final class TileConfig {
   static const String userAgentPackageName = 'com.tagme.tagme';
 
   /// Maximum zoom level supported by Stadia Maps OSM Bright tiles.
-  static const int maxZoom = 20;
+  static const double maxZoom = 20;
 }
