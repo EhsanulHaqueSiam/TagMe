@@ -10,10 +10,12 @@ class ChatInputBar extends StatefulWidget {
     super.key,
     required this.onSend,
     required this.onSharePhone,
+    required this.onShareLocation,
   });
 
   final void Function(String text) onSend;
   final VoidCallback onSharePhone;
+  final VoidCallback onShareLocation;
 
   @override
   State<ChatInputBar> createState() => _ChatInputBarState();
@@ -59,6 +61,21 @@ class _ChatInputBarState extends State<ChatInputBar> {
       ),
       child: Row(
         children: [
+          // Location share button
+          Semantics(
+            label: 'Share location',
+            child: SizedBox(
+              width: 44,
+              height: 44,
+              child: IconButton(
+                onPressed: widget.onShareLocation,
+                icon: const Icon(Icons.location_on),
+                color: AppColors.onSurfaceDim,
+                padding: EdgeInsets.zero,
+              ),
+            ),
+          ),
+
           // Phone share button
           Semantics(
             label: 'Share your phone number',

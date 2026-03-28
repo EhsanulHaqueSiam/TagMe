@@ -11,9 +11,14 @@ import 'package:tagme/features/chat/data/repositories/chat_repository.dart';
 import 'package:tagme/features/chat/presentation/widgets/chat_input_bar.dart';
 import 'package:tagme/features/chat/presentation/widgets/message_bubble.dart';
 import 'package:tagme/features/chat/presentation/widgets/phone_share_card.dart';
+import 'package:tagme/features/location_sharing/presentation/widgets/location_share_card.dart';
+import 'package:tagme/features/location_sharing/presentation/widgets/location_attachment_sheet.dart';
 import 'package:tagme/features/rides/presentation/widgets/route_visualization.dart';
 import 'package:tagme/features/chat/providers/chat_providers.dart';
+import 'package:tagme/features/map/providers/location_provider.dart';
+import 'package:tagme/features/rides/data/services/route_service.dart';
 import 'package:tagme/features/profile/providers/profile_provider.dart';
+import 'package:latlong2/latlong.dart';
 
 /// Full-screen chat conversation with ride context header,
 /// real-time messages, input bar, and phone share dialog.
@@ -212,6 +217,11 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                         message: message,
                         isSent: isSent,
                       );
+                    } else if (message.type == 'location_shared') {
+                      messageWidget = LocationShareCard(
+                        message: message,
+                        isSent: isSent,
+                      );
                     } else {
                       messageWidget = MessageBubble(
                         message: message,
@@ -254,6 +264,11 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
               currentUserId,
               currentUserName,
               otherName,
+            ),
+            onShareLocation: () => _showLocationAttachmentSheet(
+              context,
+              currentUserId,
+              currentUserName,
             ),
           ),
         ],
@@ -393,6 +408,85 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
       // Remove pending message once stream delivers the confirmed one
       if (mounted) {
         setState(() => _pendingMessages.remove(pendingMsg));
+      }
+    }
+  }
+
+  void _showLocationAttachmentSheet(
+    BuildContext context,
+    String currentUserId,
+    String currentUserName,
+  ) {
+    showModalBottomSheet<void>(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (_) => LocationAttachmentSheet(
+        onShareStatic: () {
+          Navigator.of(context).pop(); // Dismiss sheet
+          _sendStaticLocation(currentUserId, currentUserName);
+        },
+        onShareLive: () {
+          Navigator.of(context).pop(); // Dismiss sheet
+          // Live location wiring added in Plan 04
+        },
+      ),
+    );
+  }
+
+  Future<void> _sendStaticLocation(
+    String currentUserId,
+    String currentUserName,
+  ) async {
+    final locationAsync = ref.read(currentLocationProvider);
+    final position = locationAsync.value;
+    if (position == null) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+              'Could not get your location. Check that location is enabled.',
+            ),
+            backgroundColor: Color(0xFF323232),
+          ),
+        );
+      }
+      return;
+    }
+
+    // Reverse geocode for a label (best-effort, fallback to coordinates)
+    String label =
+        '${position.latitude.toStringAsFixed(4)}, ${position.longitude.toStringAsFixed(4)}';
+    try {
+      final routeService = ref.read(routeServiceProvider);
+      final geocoded = await routeService.reverseGeocode(
+        LatLng(position.latitude, position.longitude),
+      );
+      if (geocoded != 'Unknown location') {
+        label = geocoded;
+      }
+    } catch (_) {
+      // Use coordinate fallback
+    }
+
+    try {
+      await ref.read(chatRepositoryProvider).sendMessage(
+            conversationId: widget.conversationId,
+            senderId: currentUserId,
+            senderName: currentUserName,
+            text: label,
+            type: 'location_shared',
+            latitude: position.latitude,
+            longitude: position.longitude,
+            locationLabel: label,
+          );
+    } catch (_) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Could not share location. Try again.'),
+            backgroundColor: Color(0xFF323232),
+          ),
+        );
       }
     }
   }
