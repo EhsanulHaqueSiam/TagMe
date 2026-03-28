@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: verifying
-stopped_at: Completed 05-01-PLAN.md
-last_updated: "2026-03-28T22:15:17.066Z"
+stopped_at: Completed 05-02-PLAN.md
+last_updated: "2026-03-28T22:19:18.859Z"
 last_activity: 2026-03-28
 progress:
   total_phases: 4
@@ -68,6 +68,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 04-play-store-launch P02 | 3min | 2 tasks | 5 files |
 | Phase 04-play-store-launch P03 | 2min | 2 tasks | 8 files |
 | Phase 05 P01 | 3min | 2 tasks | 6 files |
+| Phase 05 P02 | 6min | 2 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -112,6 +113,9 @@ Recent decisions affecting current work:
 - [Phase 04-play-store-launch]: Firebase init wrapped in try-catch so app runs without firebase_options.dart configured
 - [Phase 04-play-store-launch]: Stub firebase_options.dart throws UnsupportedError with instructions to run flutterfire configure
 - [Phase 05]: Conditional Firestore field writes: location fields only persisted when non-null to avoid empty fields
+- [Phase 05]: share_plus 10.1.4 uses Share.share(text) static API, not SharePlus.instance pattern
+- [Phase 05]: GeoJsonFeature point geometry coordinates accessed via geometry.coordinates[0][0] not casting as ORSCoordinate
+- [Phase 05]: ThrottledLocationWriter uses 10s min interval with timer-based deferred write for Firestore live location
 
 ### Pending Todos
 
@@ -125,6 +129,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-28T22:15:17.064Z
-Stopped at: Completed 05-01-PLAN.md
+Last session: 2026-03-28T22:19:18.858Z
+Stopped at: Completed 05-02-PLAN.md
 Resume file: None

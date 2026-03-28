@@ -90,7 +90,7 @@ Plans:
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 -> 2 -> 3 -> 4
+Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
@@ -98,3 +98,4 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 | 2. Rides & Matching | 0/5 | Planning complete | - |
 | 3. Chat & Notifications | 3/4 | In Progress|  |
 | 4. Play Store Launch | 0/3 | Planning complete | - |
+| 5. Live Location & Map Features | 1/6 | In Progress | - |
