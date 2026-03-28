@@ -1,7 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:tagme/core/constants/app_colors.dart';
 import 'package:tagme/core/constants/app_spacing.dart';
 import 'package:tagme/core/constants/transport_types.dart';
@@ -11,14 +15,17 @@ import 'package:tagme/features/chat/data/repositories/chat_repository.dart';
 import 'package:tagme/features/chat/presentation/widgets/chat_input_bar.dart';
 import 'package:tagme/features/chat/presentation/widgets/message_bubble.dart';
 import 'package:tagme/features/chat/presentation/widgets/phone_share_card.dart';
-import 'package:tagme/features/location_sharing/presentation/widgets/location_share_card.dart';
-import 'package:tagme/features/location_sharing/presentation/widgets/location_attachment_sheet.dart';
-import 'package:tagme/features/rides/presentation/widgets/route_visualization.dart';
 import 'package:tagme/features/chat/providers/chat_providers.dart';
+import 'package:tagme/features/location_sharing/data/repositories/live_location_repository.dart';
+import 'package:tagme/features/location_sharing/presentation/widgets/embedded_live_map.dart';
+import 'package:tagme/features/location_sharing/presentation/widgets/live_sharing_banner.dart';
+import 'package:tagme/features/location_sharing/presentation/widgets/location_attachment_sheet.dart';
+import 'package:tagme/features/location_sharing/presentation/widgets/location_share_card.dart';
+import 'package:tagme/features/location_sharing/providers/live_location_providers.dart';
 import 'package:tagme/features/map/providers/location_provider.dart';
-import 'package:tagme/features/rides/data/services/route_service.dart';
 import 'package:tagme/features/profile/providers/profile_provider.dart';
-import 'package:latlong2/latlong.dart';
+import 'package:tagme/features/rides/data/services/route_service.dart';
+import 'package:tagme/features/rides/presentation/widgets/route_visualization.dart';
 
 /// Full-screen chat conversation with ride context header,
 /// real-time messages, input bar, and phone share dialog.
@@ -31,18 +38,46 @@ class ChatScreen extends ConsumerStatefulWidget {
   ConsumerState<ChatScreen> createState() => _ChatScreenState();
 }
 
-class _ChatScreenState extends ConsumerState<ChatScreen> {
+class _ChatScreenState extends ConsumerState<ChatScreen>
+    with WidgetsBindingObserver {
   /// Messages being sent optimistically (not yet confirmed by Firestore).
   final List<Message> _pendingMessages = [];
   bool _markedAsRead = false;
 
+  // Live location sharing state
+  bool _isLiveSharing = false;
+  DateTime? _liveSharingStartTime;
+  Timer? _countdownTimer;
+  ThrottledLocationWriter? _locationWriter;
+  StreamSubscription<Position>? _locationSubscription;
+  static const _liveSharingDuration = Duration(minutes: 30);
+
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     // Mark as read on init (deferred to after first build to have ref).
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _markAsRead();
     });
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    _stopLiveSharing(sendStopToFirestore: false);
+    _countdownTimer?.cancel();
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused ||
+        state == AppLifecycleState.detached) {
+      if (_isLiveSharing) {
+        _stopLiveSharing();
+      }
+    }
   }
 
   void _markAsRead() {
@@ -135,6 +170,35 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
           // Ride context header
           if (conversation != null)
             _buildRideContextHeader(context, theme, conversation),
+
+          // Live sharing banner
+          if (_isLiveSharing && _liveSharingStartTime != null)
+            LiveSharingBanner(
+              remainingDuration: _computeRemainingDuration(),
+              onStop: _stopLiveSharing,
+            ),
+
+          // Embedded live map (show when any participant is sharing)
+          Builder(builder: (context) {
+            final liveLocationsAsync = ref.watch(
+              activeLiveLocationsProvider(widget.conversationId),
+            );
+            final hasActiveLiveLocations =
+                liveLocationsAsync.value?.isNotEmpty ?? false;
+            if (!hasActiveLiveLocations && !_isLiveSharing) {
+              return const SizedBox.shrink();
+            }
+            return Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppSpacing.md,
+                vertical: AppSpacing.sm,
+              ),
+              child: EmbeddedLiveMap(
+                conversationId: widget.conversationId,
+                currentUserId: currentUserId,
+              ),
+            );
+          }),
 
           // Message area
           Expanded(
@@ -427,7 +491,10 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
         },
         onShareLive: () {
           Navigator.of(context).pop(); // Dismiss sheet
-          // Live location wiring added in Plan 04
+          final userId = ref.read(profileProvider).value?.id ?? '';
+          if (userId.isNotEmpty) {
+            _startLiveSharing(userId);
+          }
         },
       ),
     );
@@ -488,6 +555,81 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
           ),
         );
       }
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // Live location sharing
+  // ---------------------------------------------------------------------------
+
+  Duration _computeRemainingDuration() {
+    if (_liveSharingStartTime == null) return Duration.zero;
+    final elapsed = DateTime.now().difference(_liveSharingStartTime!);
+    final remaining = _liveSharingDuration - elapsed;
+    return remaining.isNegative ? Duration.zero : remaining;
+  }
+
+  void _startLiveSharing(String currentUserId) {
+    final repo = ref.read(liveLocationRepositoryProvider);
+    _locationWriter = ThrottledLocationWriter(repository: repo);
+    _liveSharingStartTime = DateTime.now();
+
+    // Start GPS stream with distanceFilter: 10m
+    final locationStream = Geolocator.getPositionStream(
+      locationSettings: const LocationSettings(
+        accuracy: LocationAccuracy.high,
+        distanceFilter: 10,
+      ),
+    );
+    _locationSubscription = locationStream.listen((position) {
+      _locationWriter?.onPositionUpdate(
+        position,
+        conversationId: widget.conversationId,
+        userId: currentUserId,
+      );
+    });
+
+    // Start countdown timer (updates every second for banner display)
+    _countdownTimer = Timer.periodic(const Duration(seconds: 1), (_) {
+      if (!mounted) return;
+      final elapsed = DateTime.now().difference(_liveSharingStartTime!);
+      if (elapsed >= _liveSharingDuration) {
+        _stopLiveSharing();
+      } else {
+        setState(() {}); // Rebuild to update countdown
+      }
+    });
+
+    setState(() => _isLiveSharing = true);
+  }
+
+  Future<void> _stopLiveSharing({bool sendStopToFirestore = true}) async {
+    _locationSubscription?.cancel();
+    _locationSubscription = null;
+    _locationWriter?.dispose();
+    _locationWriter = null;
+    _countdownTimer?.cancel();
+    _countdownTimer = null;
+
+    if (sendStopToFirestore) {
+      final currentUserId = ref.read(profileProvider).value?.id ?? '';
+      if (currentUserId.isNotEmpty) {
+        try {
+          await ref.read(liveLocationRepositoryProvider).stopSharing(
+                conversationId: widget.conversationId,
+                userId: currentUserId,
+              );
+        } catch (_) {
+          // Best-effort cleanup
+        }
+      }
+    }
+
+    if (mounted) {
+      setState(() {
+        _isLiveSharing = false;
+        _liveSharingStartTime = null;
+      });
     }
   }
 
