@@ -15,6 +15,8 @@ import 'package:tagme/features/rides/data/repositories/join_request_repository.d
 import 'package:tagme/features/rides/data/repositories/ride_repository.dart';
 import 'package:tagme/features/rides/presentation/widgets/route_visualization.dart';
 import 'package:tagme/features/rides/providers/ride_providers.dart';
+import 'package:tagme/features/location_sharing/data/services/maps_share_service.dart';
+import 'package:share_plus/share_plus.dart';
 
 /// Full ride detail view with poster info, route card, fare estimate,
 /// and context-aware action button (join/pending/accepted/full/own).
@@ -67,6 +69,41 @@ class _RideDetailScreenState extends ConsumerState<RideDetailScreen>
           onPressed: () => context.pop(),
         ),
         actions: [
+          // Open in Maps button (for all rides)
+          IconButton(
+            icon: const Icon(Icons.map, size: 24),
+            tooltip: 'Open in Maps',
+            onPressed: ride != null && ride.originGeopoint != null
+                ? () {
+                    MapsShareService().openInGoogleMaps(
+                      latitude: ride.originGeopoint!.latitude,
+                      longitude: ride.originGeopoint!.longitude,
+                      label: ride.originAddress,
+                    );
+                  }
+                : null,
+          ),
+          // Share button (for all rides)
+          IconButton(
+            icon: const Icon(Icons.share, size: 24),
+            tooltip: 'Share Ride Location',
+            onPressed: ride != null && ride.originGeopoint != null
+                ? () {
+                    final originUrl =
+                        'https://www.google.com/maps/search/?api=1&query=${ride.originGeopoint!.latitude},${ride.originGeopoint!.longitude}';
+                    String shareText = 'Ride from ${ride.originAddress}';
+                    if (ride.destinationGeopoint != null) {
+                      final destUrl =
+                          'https://www.google.com/maps/search/?api=1&query=${ride.destinationGeopoint!.latitude},${ride.destinationGeopoint!.longitude}';
+                      shareText +=
+                          ' to ${ride.destinationAddress}\n\nOrigin: $originUrl\nDestination: $destUrl';
+                    } else {
+                      shareText += '\n\n$originUrl';
+                    }
+                    Share.share(shareText);
+                  }
+                : null,
+          ),
           if (isOwnRide)
             PopupMenuButton<String>(
               onSelected: (value) {
