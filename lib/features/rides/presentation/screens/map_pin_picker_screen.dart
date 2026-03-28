@@ -120,7 +120,7 @@ class _MapPinPickerScreenState extends ConsumerState<MapPinPickerScreen> {
             ),
             children: [
               TileLayer(
-                urlTemplate: TileConfig.stadiaMapsTemplate,
+                urlTemplate: TileConfig.tileUrl(context),
                 userAgentPackageName: TileConfig.userAgentPackageName,
                 maxZoom: TileConfig.maxZoom,
               ),

@@ -52,9 +52,20 @@ class _ProfileSetupScreenState extends ConsumerState<ProfileSetupScreen> {
       photoUrl: _photoFile?.path,
     );
 
-    await ref
-        .read(profileProvider.notifier)
-        .saveProfile(student);
+    try {
+      await ref
+          .read(profileProvider.notifier)
+          .saveProfile(student)
+          .timeout(const Duration(seconds: 10));
+    } catch (e) {
+      if (mounted) {
+        setState(() => _isSaving = false);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to save profile: $e')),
+        );
+        return;
+      }
+    }
 
     if (mounted) {
       context.go('/map');

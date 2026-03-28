@@ -24,7 +24,7 @@ Future<void> main() async {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
-  } on Exception catch (e) {
+  } catch (e) {
     debugPrint('Firebase init failed: $e — app will run with limited functionality');
   }
 

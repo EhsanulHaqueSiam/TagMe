@@ -335,7 +335,7 @@ class _RideDetailScreenState extends ConsumerState<RideDetailScreen>
             ),
             children: [
               TileLayer(
-                urlTemplate: TileConfig.stadiaMapsTemplate,
+                urlTemplate: TileConfig.tileUrl(context),
                 userAgentPackageName: TileConfig.userAgentPackageName,
                 maxZoom: TileConfig.maxZoom,
               ),

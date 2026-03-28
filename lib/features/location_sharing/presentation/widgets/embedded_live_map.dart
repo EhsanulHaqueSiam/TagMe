@@ -124,7 +124,7 @@ class EmbeddedLiveMap extends ConsumerWidget {
               options: mapOptions,
               children: [
                 TileLayer(
-                  urlTemplate: TileConfig.stadiaMapsTemplate,
+                  urlTemplate: TileConfig.tileUrl(context),
                   userAgentPackageName: TileConfig.userAgentPackageName,
                   maxZoom: TileConfig.maxZoom,
                 ),
