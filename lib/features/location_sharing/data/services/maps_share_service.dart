@@ -55,6 +55,6 @@ class MapsShareService {
     final url =
         'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
     final text = label != null ? '$label\n$url' : url;
-    await SharePlus.instance.share(ShareParams(text: text));
+    await Share.share(text);
   }
 }

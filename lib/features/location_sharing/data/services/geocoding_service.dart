@@ -35,7 +35,7 @@ class GeocodingService {
     try {
       final result = await _client.geocodeAutoCompleteGet(
         text: query,
-        focusPointCoordinate: ORSCoordinate(
+        focusPointCoordinate: const ORSCoordinate(
           latitude: 23.8103,
           longitude: 90.4125,
         ),
@@ -54,7 +54,7 @@ class GeocodingService {
           secondaryLabel: props['label'] as String?,
         );
       }).toList();
-    } catch (_) {
+    } on Exception catch (_) {
       return [];
     }
   }
