@@ -3,7 +3,6 @@ CLAUDE.md
 .claude/
 
 # Firebase config — contains API keys and project IDs
-lib/firebase_options.dart
 android/app/google-services.json
 firebase.json
 
