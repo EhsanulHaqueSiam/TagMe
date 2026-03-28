@@ -6,6 +6,12 @@ import 'package:go_router/go_router.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:tagme/core/constants/app_colors.dart';
 import 'package:tagme/core/constants/tile_config.dart';
+import 'package:tagme/features/location_sharing/data/services/isochrone_service.dart';
+import 'package:tagme/features/location_sharing/data/services/poi_service.dart';
+import 'package:tagme/features/location_sharing/presentation/widgets/isochrone_legend.dart';
+import 'package:tagme/features/location_sharing/presentation/widgets/isochrone_overlay.dart';
+import 'package:tagme/features/location_sharing/presentation/widgets/poi_chip_bar.dart';
+import 'package:tagme/features/location_sharing/presentation/widgets/poi_info_sheet.dart';
 import 'package:tagme/features/map/presentation/widgets/map_top_bar.dart';
 import 'package:tagme/features/map/presentation/widgets/my_location_fab.dart';
 import 'package:tagme/features/map/presentation/widgets/student_bottom_sheet.dart';
@@ -40,6 +46,17 @@ class _MapScreenState extends ConsumerState<MapScreen> {
 
   /// Whether nearby students have loaded at least once (for fade-in animation).
   bool _studentsLoaded = false;
+
+  // POI state
+  int? _selectedPOICategoryId;
+  List<POIResult> _poiResults = [];
+  bool _isLoadingPOIs = false;
+
+  // Isochrone state
+  List<List<LatLng>>? _isochronePolygons;
+  String _isochroneProfile = 'driving-car';
+  LatLng? _isochroneCenter;
+  bool _isLoadingIsochrone = false;
 
   @override
   Widget build(BuildContext context) {
@@ -115,6 +132,30 @@ class _MapScreenState extends ConsumerState<MapScreen> {
                 maxZoom: TileConfig.maxZoom,
               ),
 
+              // Isochrone polygon overlay (rendered below markers)
+              if (_isochronePolygons != null &&
+                  _isochronePolygons!.isNotEmpty)
+                PolygonLayer(
+                  polygons: [
+                    if (_isochronePolygons!.isNotEmpty)
+                      Polygon(
+                        points: _isochronePolygons![0],
+                        color: AppColors.accent.withValues(alpha: 0.1),
+                        borderColor:
+                            AppColors.accent.withValues(alpha: 0.6),
+                        borderStrokeWidth: 2.0,
+                      ),
+                    if (_isochronePolygons!.length > 1)
+                      Polygon(
+                        points: _isochronePolygons![1],
+                        color: AppColors.accent.withValues(alpha: 0.06),
+                        borderColor:
+                            AppColors.accent.withValues(alpha: 0.6),
+                        borderStrokeWidth: 1.0,
+                      ),
+                  ],
+                ),
+
               // User location blue dot marker (separate from cluster layer)
               if (userLatLng != null)
                 MarkerLayer(
@@ -167,6 +208,34 @@ class _MapScreenState extends ConsumerState<MapScreen> {
                     ),
                   ),
                 ),
+
+              // POI markers (green circles with category icons)
+              if (_poiResults.isNotEmpty)
+                MarkerLayer(
+                  markers: _poiResults
+                      .map(
+                        (poi) => Marker(
+                          point: LatLng(poi.latitude, poi.longitude),
+                          width: 32,
+                          height: 32,
+                          child: GestureDetector(
+                            onTap: () => _showPOIInfoSheet(context, poi),
+                            child: Container(
+                              decoration: const BoxDecoration(
+                                color: AppColors.success,
+                                shape: BoxShape.circle,
+                              ),
+                              child: Icon(
+                                _poiIcon(poi.categoryId),
+                                color: Colors.white,
+                                size: 16,
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                      .toList(),
+                ),
             ],
           ),
 
@@ -177,6 +246,71 @@ class _MapScreenState extends ConsumerState<MapScreen> {
             right: 0,
             child: MapTopBar(),
           ),
+
+          // POI category chip bar (below map top bar)
+          Positioned(
+            top: MediaQuery.of(context).padding.top + 56,
+            left: 0,
+            right: 0,
+            child: POIChipBar(
+              selectedCategoryId: _selectedPOICategoryId,
+              onCategorySelected: _handlePOICategorySelected,
+            ),
+          ),
+
+          // Loading indicator for POIs
+          if (_isLoadingPOIs)
+            Positioned(
+              top: MediaQuery.of(context).padding.top + 104,
+              left: 0,
+              right: 0,
+              child: const Center(
+                child: SizedBox(
+                  width: 24,
+                  height: 24,
+                  child: CircularProgressIndicator(strokeWidth: 2),
+                ),
+              ),
+            ),
+
+          // Isochrone legend and controls
+          if (_isochronePolygons != null) ...[
+            // Legend (bottom-left, above attribution)
+            const Positioned(
+              bottom: 80,
+              left: 16,
+              child: IsochroneLegend(),
+            ),
+            // Transport mode selector (bottom center)
+            Positioned(
+              bottom: 16,
+              left: 16,
+              right: 80,
+              child: IsochroneOverlay(
+                selectedProfile: _isochroneProfile,
+                onProfileChanged: _regenerateIsochrone,
+                onDismiss: () => setState(() {
+                  _isochronePolygons = null;
+                  _isochroneCenter = null;
+                }),
+              ),
+            ),
+          ],
+
+          // Loading indicator for isochrone
+          if (_isLoadingIsochrone)
+            const Positioned(
+              bottom: 80,
+              left: 0,
+              right: 0,
+              child: Center(
+                child: SizedBox(
+                  width: 24,
+                  height: 24,
+                  child: CircularProgressIndicator(strokeWidth: 2),
+                ),
+              ),
+            ),
 
           // Search FAB (above my-location FAB)
           Positioned(
@@ -284,7 +418,7 @@ class _MapScreenState extends ConsumerState<MapScreen> {
         },
         onShowReachability: () {
           Navigator.of(context).pop();
-          // Isochrone implementation in Plan 06
+          _generateIsochrone(point);
         },
       ),
     );
@@ -304,6 +438,89 @@ class _MapScreenState extends ConsumerState<MapScreen> {
   void _recenterMap() {
     final target = _userLocation ?? _dhakaCenter;
     _mapController.move(target, 15);
+  }
+
+  /// Handles POI category chip selection.
+  Future<void> _handlePOICategorySelected(int? categoryId) async {
+    setState(() {
+      _selectedPOICategoryId = categoryId;
+      if (categoryId == null) {
+        _poiResults = [];
+        return;
+      }
+      _isLoadingPOIs = true;
+    });
+    if (categoryId == null) return;
+
+    final center = _userLocation ?? _dhakaCenter;
+    final service = POIService();
+    final results = await service.searchPOIs(
+      lat: center.latitude,
+      lng: center.longitude,
+      categoryId: categoryId,
+      radiusMeters: 2000,
+    );
+    if (mounted) {
+      setState(() {
+        _poiResults = results;
+        _isLoadingPOIs = false;
+      });
+    }
+  }
+
+  /// Shows a bottom sheet with POI details and action buttons.
+  void _showPOIInfoSheet(BuildContext context, POIResult poi) {
+    showModalBottomSheet<void>(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (_) => POIInfoSheet(poi: poi),
+    );
+  }
+
+  /// Generates isochrone polygons for the given map point.
+  Future<void> _generateIsochrone(LatLng point) async {
+    setState(() {
+      _isLoadingIsochrone = true;
+      _isochroneCenter = point;
+    });
+    final service = IsochroneService();
+    final result = await service.getIsochrones(
+      lat: point.latitude,
+      lng: point.longitude,
+      profile: _isochroneProfile,
+    );
+    if (mounted) {
+      setState(() {
+        _isochronePolygons = result?.polygons;
+        _isLoadingIsochrone = false;
+      });
+    }
+  }
+
+  /// Regenerates isochrone with a different transport profile.
+  Future<void> _regenerateIsochrone(String profile) async {
+    setState(() {
+      _isochroneProfile = profile;
+    });
+    if (_isochroneCenter != null) {
+      await _generateIsochrone(_isochroneCenter!);
+    }
+  }
+
+  /// Returns the appropriate Material icon for a POI category.
+  IconData _poiIcon(int categoryId) {
+    switch (categoryId) {
+      case POICategories.universities:
+        return Icons.school;
+      case POICategories.busStops:
+        return Icons.directions_bus;
+      case POICategories.restaurants:
+        return Icons.restaurant;
+      case POICategories.hospitals:
+        return Icons.local_hospital;
+      default:
+        return Icons.place;
+    }
   }
 }
 
