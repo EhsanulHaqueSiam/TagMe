@@ -12,6 +12,8 @@ import 'package:tagme/features/map/presentation/widgets/student_bottom_sheet.dar
 import 'package:tagme/features/map/presentation/widgets/student_marker.dart';
 import 'package:tagme/features/map/providers/location_provider.dart';
 import 'package:tagme/features/map/providers/nearby_students_provider.dart';
+import 'package:tagme/features/location_sharing/data/services/maps_share_service.dart';
+import 'package:tagme/features/location_sharing/presentation/widgets/map_context_sheet.dart';
 import 'package:tagme/features/profile/data/models/student.dart';
 
 /// Fallback center when GPS is not yet available (Dhaka, Bangladesh).
@@ -101,6 +103,9 @@ class _MapScreenState extends ConsumerState<MapScreen> {
               // Explicit zoom 13 per CONTEXT.md: city-level default.
               // ignore: avoid_redundant_argument_values, prefer_int_literals
               initialZoom: 13.0,
+              onLongPress: (tapPosition, latLng) {
+                _showMapContextSheet(context, latLng);
+              },
             ),
             children: [
               // Stadia Maps tile layer
@@ -173,6 +178,29 @@ class _MapScreenState extends ConsumerState<MapScreen> {
             child: MapTopBar(),
           ),
 
+          // Search FAB (above my-location FAB)
+          Positioned(
+            bottom: 80,
+            right: 16,
+            child: Semantics(
+              label: 'Search for places',
+              child: FloatingActionButton(
+                heroTag: 'searchFab',
+                onPressed: () async {
+                  final result = await context
+                      .push<Map<String, dynamic>>('/places/search');
+                  if (result != null && mounted) {
+                    final lat = result['lat'] as double;
+                    final lng = result['lng'] as double;
+                    _mapController.move(LatLng(lat, lng), 15);
+                  }
+                },
+                backgroundColor: AppColors.accent,
+                child: const Icon(Icons.search, color: Colors.white),
+              ),
+            ),
+          ),
+
           // My Location FAB (bottom-right)
           Positioned(
             bottom: 16,
@@ -229,6 +257,35 @@ class _MapScreenState extends ConsumerState<MapScreen> {
               ),
             ),
         ],
+      ),
+    );
+  }
+
+  /// Shows a context sheet with location actions on map long-press.
+  void _showMapContextSheet(BuildContext context, LatLng point) {
+    final mapsService = MapsShareService();
+    showModalBottomSheet<void>(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (_) => MapContextSheet(
+        onOpenInMaps: () {
+          Navigator.of(context).pop();
+          mapsService.openInGoogleMaps(
+            latitude: point.latitude,
+            longitude: point.longitude,
+          );
+        },
+        onShare: () {
+          Navigator.of(context).pop();
+          mapsService.shareLocation(
+            latitude: point.latitude,
+            longitude: point.longitude,
+          );
+        },
+        onShowReachability: () {
+          Navigator.of(context).pop();
+          // Isochrone implementation in Plan 06
+        },
       ),
     );
   }
