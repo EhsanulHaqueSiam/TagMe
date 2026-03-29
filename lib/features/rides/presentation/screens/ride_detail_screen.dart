@@ -337,7 +337,7 @@ class _RideDetailScreenState extends ConsumerState<RideDetailScreen>
             ),
             children: [
               TileLayer(
-                urlTemplate: TileConfig.tileUrl(context),
+                urlTemplate: TileConfig.tileUrl,
                 userAgentPackageName: TileConfig.userAgentPackageName,
                 maxZoom: TileConfig.maxZoom,
               ),
@@ -722,9 +722,9 @@ class _RideDetailScreenState extends ConsumerState<RideDetailScreen>
       );
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
+          SnackBar(
             content: Text('Join request sent!'),
-            backgroundColor: Color(0xFF323232),
+            backgroundColor: Theme.of(context).colorScheme.inverseSurface,
             duration: Duration(seconds: 4),
           ),
         );
@@ -732,9 +732,9 @@ class _RideDetailScreenState extends ConsumerState<RideDetailScreen>
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
+          SnackBar(
             content: Text('Could not send join request. Tap to retry.'),
-            backgroundColor: Color(0xFF323232),
+            backgroundColor: Theme.of(context).colorScheme.inverseSurface,
           ),
         );
       }
@@ -823,18 +823,18 @@ class _RideDetailScreenState extends ConsumerState<RideDetailScreen>
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
+          SnackBar(
             content: Text('Left ride'),
-            backgroundColor: Color(0xFF323232),
+            backgroundColor: Theme.of(context).colorScheme.inverseSurface,
           ),
         );
       }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
+          SnackBar(
             content: Text('Could not leave ride. Try again.'),
-            backgroundColor: Color(0xFF323232),
+            backgroundColor: Theme.of(context).colorScheme.inverseSurface,
           ),
         );
       }

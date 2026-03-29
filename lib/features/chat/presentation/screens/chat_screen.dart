@@ -467,8 +467,12 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
             senderName: currentUserName,
             text: text,
           );
-    } catch (_) {
-      // On failure, keep the message visible (could add retry later)
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Message not sent. Check your connection.')),
+        );
+      }
     } finally {
       // Remove pending message once stream delivers the confirmed one
       if (mounted) {
@@ -510,11 +514,11 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
     if (position == null) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
+          SnackBar(
             content: Text(
               'Could not get your location. Check that location is enabled.',
             ),
-            backgroundColor: Color(0xFF323232),
+            backgroundColor: Theme.of(context).colorScheme.inverseSurface,
           ),
         );
       }
@@ -550,9 +554,9 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
     } catch (_) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
+          SnackBar(
             content: Text('Could not share location. Try again.'),
-            backgroundColor: Color(0xFF323232),
+            backgroundColor: Theme.of(context).colorScheme.inverseSurface,
           ),
         );
       }
@@ -707,6 +711,11 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
                           }
                         } catch (_) {
                           setDialogState(() => isSending = false);
+                          if (context.mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text('Could not share your number. Try again.')),
+                            );
+                          }
                         }
                       },
                 style: FilledButton.styleFrom(

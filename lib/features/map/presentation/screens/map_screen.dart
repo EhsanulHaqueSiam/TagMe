@@ -127,7 +127,7 @@ class _MapScreenState extends ConsumerState<MapScreen> {
             children: [
               // Stadia Maps tile layer
               TileLayer(
-                urlTemplate: TileConfig.tileUrl(context),
+                urlTemplate: TileConfig.tileUrl,
                 userAgentPackageName: TileConfig.userAgentPackageName,
                 maxZoom: TileConfig.maxZoom,
               ),

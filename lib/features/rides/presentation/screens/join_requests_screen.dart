@@ -159,7 +159,7 @@ class _JoinRequestsScreenState extends ConsumerState<JoinRequestsScreen>
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Accepted ${request.requesterName}'),
-            backgroundColor: const Color(0xFF323232),
+            backgroundColor: Theme.of(context).colorScheme.inverseSurface,
             duration: const Duration(seconds: 4),
           ),
         );
@@ -171,9 +171,9 @@ class _JoinRequestsScreenState extends ConsumerState<JoinRequestsScreen>
         setState(() => _rideFull = true);
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
+            SnackBar(
               content: Text('Ride is now full'),
-              backgroundColor: Color(0xFF323232),
+              backgroundColor: Theme.of(context).colorScheme.inverseSurface,
               duration: Duration(seconds: 4),
             ),
           );
@@ -181,9 +181,9 @@ class _JoinRequestsScreenState extends ConsumerState<JoinRequestsScreen>
       } else {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
+            SnackBar(
               content: Text('Could not accept request. Try again.'),
-              backgroundColor: Color(0xFF323232),
+              backgroundColor: Theme.of(context).colorScheme.inverseSurface,
             ),
           );
         }

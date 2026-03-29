@@ -21,13 +21,14 @@ class ShellScreen extends ConsumerWidget {
     final unreadCount = currentUserId.isNotEmpty
         ? ref.watch(totalUnreadCountProvider(currentUserId))
         : 0;
+    final cs = Theme.of(context).colorScheme;
 
     return Scaffold(
       body: navigationShell,
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           border: Border(
-            top: BorderSide(color: Theme.of(context).colorScheme.surfaceContainerHighest),
+            top: BorderSide(color: cs.surfaceContainerHighest),
           ),
         ),
         child: NavigationBar(
@@ -36,7 +37,7 @@ class ShellScreen extends ConsumerWidget {
             index,
             initialLocation: index == navigationShell.currentIndex,
           ),
-          backgroundColor: Theme.of(context).colorScheme.surface,
+          backgroundColor: cs.surface,
           indicatorColor: AppColors.accent.withValues(alpha: 0.12),
           height: 56,
           destinations: [

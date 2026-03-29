@@ -28,68 +28,50 @@ TextTheme _buildTextTheme() {
   );
 }
 
-/// Light theme.
-ThemeData get appTheme {
-  return ThemeData(
-    useMaterial3: true,
-    brightness: Brightness.light,
-    colorSchemeSeed: AppColors.accent,
-    textTheme: _buildTextTheme(),
-    elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(
-        minimumSize: const Size.fromHeight(48),
-        backgroundColor: AppColors.accent,
-        foregroundColor: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
-      ),
+final _elevatedButtonTheme = ElevatedButtonThemeData(
+  style: ElevatedButton.styleFrom(
+    minimumSize: const Size.fromHeight(48),
+    backgroundColor: AppColors.accent,
+    foregroundColor: Colors.white,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(12),
     ),
-    inputDecorationTheme: InputDecorationTheme(
+  ),
+);
+
+final _segmentedButtonTheme = SegmentedButtonThemeData(
+  style: ButtonStyle(
+    minimumSize: WidgetStateProperty.all(const Size(0, 40)),
+  ),
+);
+
+InputDecorationTheme _inputTheme(Color fillColor) => InputDecorationTheme(
       filled: true,
-      fillColor: const Color(0xFFF1F3F4),
+      fillColor: fillColor,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
         borderSide: BorderSide.none,
       ),
-    ),
-    segmentedButtonTheme: SegmentedButtonThemeData(
-      style: ButtonStyle(
-        minimumSize: WidgetStateProperty.all(const Size(0, 40)),
-      ),
-    ),
-  );
-}
+    );
+
+/// Light theme.
+ThemeData get appTheme => ThemeData(
+      useMaterial3: true,
+      brightness: Brightness.light,
+      colorSchemeSeed: AppColors.accent,
+      textTheme: _buildTextTheme(),
+      elevatedButtonTheme: _elevatedButtonTheme,
+      inputDecorationTheme: _inputTheme(const Color(0xFFF1F3F4)),
+      segmentedButtonTheme: _segmentedButtonTheme,
+    );
 
 /// Dark theme.
-ThemeData get appDarkTheme {
-  return ThemeData(
-    useMaterial3: true,
-    brightness: Brightness.dark,
-    colorSchemeSeed: AppColors.accent,
-    textTheme: _buildTextTheme(),
-    elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(
-        minimumSize: const Size.fromHeight(48),
-        backgroundColor: AppColors.accent,
-        foregroundColor: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
-      ),
-    ),
-    inputDecorationTheme: InputDecorationTheme(
-      filled: true,
-      fillColor: const Color(0xFF2C2C2C),
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide.none,
-      ),
-    ),
-    segmentedButtonTheme: SegmentedButtonThemeData(
-      style: ButtonStyle(
-        minimumSize: WidgetStateProperty.all(const Size(0, 40)),
-      ),
-    ),
-  );
-}
+ThemeData get appDarkTheme => ThemeData(
+      useMaterial3: true,
+      brightness: Brightness.dark,
+      colorSchemeSeed: AppColors.accent,
+      textTheme: _buildTextTheme(),
+      elevatedButtonTheme: _elevatedButtonTheme,
+      inputDecorationTheme: _inputTheme(const Color(0xFF2C2C2C)),
+      segmentedButtonTheme: _segmentedButtonTheme,
+    );

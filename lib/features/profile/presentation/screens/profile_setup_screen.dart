@@ -1,3 +1,4 @@
+import 'dart:async' show TimeoutException;
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -57,11 +58,19 @@ class _ProfileSetupScreenState extends ConsumerState<ProfileSetupScreen> {
           .read(profileProvider.notifier)
           .saveProfile(student)
           .timeout(const Duration(seconds: 10));
-    } catch (e) {
+    } on TimeoutException {
       if (mounted) {
         setState(() => _isSaving = false);
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to save profile: $e')),
+          const SnackBar(content: Text('Saving is taking too long. Check your connection.')),
+        );
+        return;
+      }
+    } catch (_) {
+      if (mounted) {
+        setState(() => _isSaving = false);
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Could not save profile. Check your connection and try again.')),
         );
         return;
       }

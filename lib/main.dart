@@ -24,8 +24,11 @@ Future<void> main() async {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
-  } catch (e) {
-    debugPrint('Firebase init failed: $e — app will run with limited functionality');
+  } on UnsupportedError catch (e) {
+    // Stub firebase_options throws UnsupportedError when unconfigured.
+    if (kDebugMode) debugPrint('Firebase not configured: $e');
+  } on Exception catch (e) {
+    if (kDebugMode) debugPrint('Firebase init failed: $e');
   }
 
   // Initialize local notification service (no Firebase dependency).
@@ -76,7 +79,8 @@ Future<void> main() async {
     if (profileId != null) {
       await processRecurringSchedules(profileId);
     }
-  } on Exception catch (_) {
+  } on Exception catch (e) {
+    if (kDebugMode) debugPrint('processRecurringSchedules failed: $e');
     // Non-fatal: app continues even if auto-post fails.
   }
 

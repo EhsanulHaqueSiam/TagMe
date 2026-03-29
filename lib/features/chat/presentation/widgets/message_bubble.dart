@@ -28,6 +28,7 @@ class MessageBubble extends StatelessWidget {
     }
 
     final theme = Theme.of(context);
+    final cs = theme.colorScheme;
     final maxWidth = MediaQuery.of(context).size.width * 0.75;
     final timestampText = message.createdAt != null
         ? DateFormat.jm().format(message.createdAt!)
@@ -53,10 +54,10 @@ class MessageBubble extends StatelessWidget {
                     vertical: 8,
                   ),
                   decoration: BoxDecoration(
-                    color: isSent ? AppColors.accent : Theme.of(context).colorScheme.surface,
+                    color: isSent ? AppColors.accent : cs.surface,
                     border: isSent
                         ? null
-                        : Border.all(color: Theme.of(context).colorScheme.outlineVariant),
+                        : Border.all(color: cs.outlineVariant),
                     borderRadius: isSent
                         ? const BorderRadius.only(
                             topLeft: Radius.circular(16),
@@ -74,7 +75,7 @@ class MessageBubble extends StatelessWidget {
                   child: Text(
                     message.text,
                     style: theme.textTheme.bodyLarge?.copyWith(
-                      color: isSent ? Colors.white : const Color(0xFF202124),
+                      color: isSent ? Colors.white : cs.onSurface,
                     ),
                   ),
                 ),
@@ -89,7 +90,7 @@ class MessageBubble extends StatelessWidget {
               child: Text(
                 timestampText,
                 style: theme.textTheme.bodySmall?.copyWith(
-                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  color: cs.onSurfaceVariant,
                 ),
               ),
             ),
@@ -106,7 +107,7 @@ class MessageBubble extends StatelessWidget {
         child: Text(
           message.text,
           style: theme.textTheme.bodySmall?.copyWith(
-            color: Theme.of(context).colorScheme.onSurfaceVariant,
+            color: theme.colorScheme.onSurfaceVariant,
           ),
           textAlign: TextAlign.center,
         ),
