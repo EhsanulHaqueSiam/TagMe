@@ -152,7 +152,7 @@ class _UniversityDropdownState extends State<UniversityDropdown> {
       return InputDecorator(
         decoration: InputDecoration(
           filled: true,
-          fillColor: AppColors.surfaceVariant,
+          fillColor: Theme.of(context).colorScheme.surfaceContainerHighest,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
             borderSide: BorderSide.none,
@@ -184,7 +184,7 @@ class _UniversityDropdownState extends State<UniversityDropdown> {
         decoration: InputDecoration(
           hintText: 'Search your university...',
           filled: true,
-          fillColor: AppColors.surfaceVariant,
+          fillColor: Theme.of(context).colorScheme.surfaceContainerHighest,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
             borderSide: BorderSide.none,

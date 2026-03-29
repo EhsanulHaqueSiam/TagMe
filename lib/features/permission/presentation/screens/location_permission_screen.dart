@@ -65,7 +65,7 @@ class _LocationPermissionScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.dominant,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: SafeArea(
         child: Center(
           child: Padding(
@@ -104,7 +104,7 @@ class _LocationPermissionScreenState
                     'TagMe shows nearby students heading the same way. '
                     'We need your location to find ride partners around you.',
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          color: AppColors.onSurfaceDim,
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
                         ),
                     textAlign: TextAlign.center,
                   ),
@@ -154,9 +154,9 @@ class _LocationPermissionScreenState
                 // Not Now option
                 TextButton(
                   onPressed: _handleNotNow,
-                  child: const Text(
+                  child: Text(
                     'Not Now',
-                    style: TextStyle(color: AppColors.onSurfaceDim),
+                    style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
                   ),
                 ),
               ],

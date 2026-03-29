@@ -47,15 +47,15 @@ class StudentMarker extends StatelessWidget {
               ),
               child: CircleAvatar(
                 radius: 19,
-                backgroundColor: AppColors.surfaceVariant,
+                backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
                 backgroundImage: student.photoUrl != null
                     ? CachedNetworkImageProvider(student.photoUrl!)
                     : null,
                 child: student.photoUrl == null
-                    ? const Icon(
+                    ? Icon(
                         Icons.person,
                         size: 24,
-                        color: AppColors.onSurfaceDim,
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
                       )
                     : null,
               ),

@@ -83,13 +83,13 @@ class IsochroneOverlay extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: isSelected
                           ? AppColors.accent
-                          : AppColors.surfaceVariant,
+                          : Theme.of(context).colorScheme.surfaceContainerHighest,
                       shape: BoxShape.circle,
                     ),
                     child: Icon(
                       mode.icon,
                       size: 20,
-                      color: isSelected ? Colors.white : AppColors.onSurfaceDim,
+                      color: isSelected ? Colors.white : Theme.of(context).colorScheme.onSurfaceVariant,
                     ),
                   ),
                 ),

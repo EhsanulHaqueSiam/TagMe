@@ -57,7 +57,7 @@ class RouteVisualization extends StatelessWidget {
                   Text(
                     'Pick-up',
                     style: theme.textTheme.bodySmall?.copyWith(
-                      color: AppColors.onSurfaceDim,
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
                     ),
                   ),
                   const SizedBox(height: 2),
@@ -98,7 +98,7 @@ class RouteVisualization extends StatelessWidget {
                   Text(
                     'Drop-off',
                     style: theme.textTheme.bodySmall?.copyWith(
-                      color: AppColors.onSurfaceDim,
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
                     ),
                   ),
                   const SizedBox(height: 2),

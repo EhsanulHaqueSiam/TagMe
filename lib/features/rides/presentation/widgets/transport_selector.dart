@@ -63,7 +63,7 @@ class _TransportChip extends StatelessWidget {
           width: 64,
           height: 56,
           decoration: BoxDecoration(
-            color: isSelected ? AppColors.accent : AppColors.surfaceVariant,
+            color: isSelected ? AppColors.accent : Theme.of(context).colorScheme.surfaceContainerHighest,
             borderRadius: BorderRadius.circular(12),
           ),
           child: Column(
@@ -72,7 +72,7 @@ class _TransportChip extends StatelessWidget {
               Icon(
                 type.icon,
                 size: 24,
-                color: isSelected ? Colors.white : AppColors.onSurfaceDim,
+                color: isSelected ? Colors.white : Theme.of(context).colorScheme.onSurfaceVariant,
               ),
               const SizedBox(height: AppSpacing.xs),
               Text(

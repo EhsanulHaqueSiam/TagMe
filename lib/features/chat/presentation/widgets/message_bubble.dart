@@ -53,10 +53,10 @@ class MessageBubble extends StatelessWidget {
                     vertical: 8,
                   ),
                   decoration: BoxDecoration(
-                    color: isSent ? AppColors.accent : AppColors.secondary,
+                    color: isSent ? AppColors.accent : Theme.of(context).colorScheme.surface,
                     border: isSent
                         ? null
-                        : Border.all(color: const Color(0xFFE8EAED)),
+                        : Border.all(color: Theme.of(context).colorScheme.outlineVariant),
                     borderRadius: isSent
                         ? const BorderRadius.only(
                             topLeft: Radius.circular(16),
@@ -89,7 +89,7 @@ class MessageBubble extends StatelessWidget {
               child: Text(
                 timestampText,
                 style: theme.textTheme.bodySmall?.copyWith(
-                  color: AppColors.onSurfaceDim,
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
                 ),
               ),
             ),
@@ -106,7 +106,7 @@ class MessageBubble extends StatelessWidget {
         child: Text(
           message.text,
           style: theme.textTheme.bodySmall?.copyWith(
-            color: AppColors.onSurfaceDim,
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
           ),
           textAlign: TextAlign.center,
         ),

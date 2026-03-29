@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:tagme/core/constants/app_colors.dart';
 import 'package:tagme/features/profile/providers/profile_provider.dart';
 
 /// Transparent overlay bar at the top of the map screen.
@@ -41,15 +40,15 @@ class MapTopBar extends ConsumerWidget {
                 label: 'Edit your profile',
                 child: CircleAvatar(
                   radius: 20,
-                  backgroundColor: AppColors.surfaceVariant,
+                  backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
                   backgroundImage: photoUrl != null
                       ? CachedNetworkImageProvider(photoUrl)
                       : null,
                   child: photoUrl == null
-                      ? const Icon(
+                      ? Icon(
                           Icons.person,
                           size: 24,
-                          color: AppColors.onSurfaceDim,
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
                         )
                       : null,
                 ),

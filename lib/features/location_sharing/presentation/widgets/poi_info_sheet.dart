@@ -18,8 +18,8 @@ class POIInfoSheet extends StatelessWidget {
     final mapsService = MapsShareService();
 
     return Container(
-      decoration: const BoxDecoration(
-        color: Colors.white,
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(16),
           topRight: Radius.circular(16),
@@ -42,7 +42,7 @@ class POIInfoSheet extends StatelessWidget {
                 width: 32,
                 height: 4,
                 decoration: BoxDecoration(
-                  color: AppColors.surfaceVariant,
+                  color: Theme.of(context).colorScheme.surfaceContainerHighest,
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),
@@ -62,7 +62,7 @@ class POIInfoSheet extends StatelessWidget {
                 Text(
                   poi.categoryLabel,
                   style: theme.textTheme.bodySmall?.copyWith(
-                    color: AppColors.onSurfaceDim,
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
                   ),
                 ),
                 if (poi.distance != null) ...[
@@ -71,14 +71,14 @@ class POIInfoSheet extends StatelessWidget {
                     child: Text(
                       '\u2022',
                       style: theme.textTheme.bodySmall?.copyWith(
-                        color: AppColors.onSurfaceDim,
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
                       ),
                     ),
                   ),
                   Text(
                     _formatDistance(poi.distance!),
                     style: theme.textTheme.bodySmall?.copyWith(
-                      color: AppColors.onSurfaceDim,
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
                     ),
                   ),
                 ],

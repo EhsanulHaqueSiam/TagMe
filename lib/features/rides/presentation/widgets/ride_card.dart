@@ -53,9 +53,9 @@ class RideCard extends StatelessWidget {
         child: Container(
           constraints: const BoxConstraints(minHeight: 120),
           decoration: BoxDecoration(
-            color: AppColors.secondary,
+            color: Theme.of(context).colorScheme.surface,
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: const Color(0xFFE8EAED)),
+            border: Border.all(color: Theme.of(context).colorScheme.outlineVariant),
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withValues(alpha: 0.05),
@@ -118,13 +118,13 @@ class RideCard extends StatelessWidget {
           Icon(
             transport?.icon ?? Icons.directions,
             size: 32,
-            color: AppColors.onSurfaceDim,
+            color: theme.colorScheme.onSurfaceVariant,
           ),
           const SizedBox(height: AppSpacing.xs),
           Text(
             '${ride.filledSeats}/${ride.totalSeats}',
             style: theme.textTheme.bodySmall?.copyWith(
-              color: AppColors.onSurfaceDim,
+              color: theme.colorScheme.onSurfaceVariant,
             ),
             textAlign: TextAlign.center,
           ),
@@ -184,14 +184,14 @@ class RideCard extends StatelessWidget {
             Text(
               _formatTime(ride.departureTime),
               style: theme.textTheme.bodySmall?.copyWith(
-                color: AppColors.onSurfaceDim,
+                color: theme.colorScheme.onSurfaceVariant,
               ),
             ),
             const SizedBox(width: AppSpacing.md),
             Text(
               '~${ride.estimatedFare} BDT',
               style: theme.textTheme.bodySmall?.copyWith(
-                color: AppColors.onSurfaceDim,
+                color: theme.colorScheme.onSurfaceVariant,
               ),
             ),
           ],
@@ -207,7 +207,7 @@ class RideCard extends StatelessWidget {
         // Origin row.
         Row(
           children: [
-            const _Dot(color: AppColors.onSurfaceDim),
+            _Dot(color: theme.colorScheme.onSurfaceVariant),
             const SizedBox(width: AppSpacing.sm),
             Expanded(
               child: Text(
@@ -225,7 +225,7 @@ class RideCard extends StatelessWidget {
           child: Container(
             width: 1,
             height: 4,
-            color: const Color(0xFFDADCE0),
+            color: theme.colorScheme.outlineVariant,
           ),
         ),
         // Destination row.
@@ -259,7 +259,7 @@ class RideCard extends StatelessWidget {
               height: 20,
               padding: const EdgeInsets.symmetric(horizontal: 4),
               decoration: BoxDecoration(
-                color: AppColors.surfaceVariant,
+                color: theme.colorScheme.surfaceContainerHighest,
                 borderRadius: BorderRadius.circular(4),
               ),
               child: Center(
@@ -274,12 +274,12 @@ class RideCard extends StatelessWidget {
 
           // Seats badge / own ride menu / full badge.
           if (isOwnRide)
-            const Icon(Icons.more_vert, color: AppColors.onSurfaceDim)
+            Icon(Icons.more_vert, color: theme.colorScheme.onSurfaceVariant)
           else if (isFull)
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
               decoration: BoxDecoration(
-                color: AppColors.onSurfaceDim,
+                color: theme.colorScheme.onSurfaceVariant,
                 borderRadius: BorderRadius.circular(4),
               ),
               child: Text(

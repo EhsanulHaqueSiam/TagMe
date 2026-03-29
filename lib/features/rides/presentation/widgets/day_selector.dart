@@ -68,7 +68,7 @@ class DaySelector extends StatelessWidget {
                   shape: BoxShape.circle,
                   color: isSelected
                       ? AppColors.accent
-                      : AppColors.surfaceVariant,
+                      : Theme.of(context).colorScheme.surfaceContainerHighest,
                 ),
                 alignment: Alignment.center,
                 child: Text(

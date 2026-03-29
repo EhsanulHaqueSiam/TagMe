@@ -34,7 +34,6 @@ ThemeData get appTheme {
     useMaterial3: true,
     brightness: Brightness.light,
     colorSchemeSeed: AppColors.accent,
-    scaffoldBackgroundColor: AppColors.dominant,
     textTheme: _buildTextTheme(),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
@@ -48,7 +47,7 @@ ThemeData get appTheme {
     ),
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
-      fillColor: AppColors.surfaceVariant,
+      fillColor: const Color(0xFFF1F3F4),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
         borderSide: BorderSide.none,

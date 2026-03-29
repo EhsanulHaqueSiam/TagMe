@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tagme/core/constants/app_colors.dart';
 
 /// A single autocomplete result row for the place search screen.
 ///
@@ -30,10 +29,10 @@ class PlaceResultTile extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Row(
             children: [
-              const Icon(
+              Icon(
                 Icons.location_on,
                 size: 20,
-                color: AppColors.onSurfaceDim,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
               ),
               const SizedBox(width: 12),
               Expanded(
@@ -51,7 +50,7 @@ class PlaceResultTile extends StatelessWidget {
                       Text(
                         secondaryLabel!,
                         style: theme.textTheme.bodySmall?.copyWith(
-                          color: AppColors.onSurfaceDim,
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,

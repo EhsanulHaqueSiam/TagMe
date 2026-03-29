@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tagme/core/constants/app_colors.dart';
 import 'package:tagme/core/constants/app_spacing.dart';
 
 /// Stepper widget for selecting the number of available seats.
@@ -87,11 +86,11 @@ class _StepperButton extends StatelessWidget {
         child: Container(
           width: 44,
           height: 44,
-          decoration: const BoxDecoration(
-            color: AppColors.surfaceVariant,
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.surfaceContainerHighest,
             shape: BoxShape.circle,
           ),
-          child: Icon(icon, size: 20, color: AppColors.onSurfaceDim),
+          child: Icon(icon, size: 20, color: Theme.of(context).colorScheme.onSurfaceVariant),
         ),
       ),
     );

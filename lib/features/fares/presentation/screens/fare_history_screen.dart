@@ -50,7 +50,7 @@ class _FareHistoryScreenState extends ConsumerState<FareHistoryScreen> {
           leading: const BackButton(),
           bottom: TabBar(
             labelColor: AppColors.accent,
-            unselectedLabelColor: AppColors.onSurfaceDim,
+            unselectedLabelColor: Theme.of(context).colorScheme.onSurfaceVariant,
             indicatorColor: AppColors.accent,
             tabs: const [
               Tab(text: 'Balances'),
@@ -80,7 +80,7 @@ class _FareHistoryScreenState extends ConsumerState<FareHistoryScreen> {
               child: Text(
                 'No shared rides yet. Your fare splits will appear here.',
                 style: theme.textTheme.bodyLarge?.copyWith(
-                  color: AppColors.onSurfaceDim,
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -133,7 +133,7 @@ class _FareHistoryScreenState extends ConsumerState<FareHistoryScreen> {
                 'No ride history yet. Complete a shared ride to see '
                 'fare details.',
                 style: theme.textTheme.bodyLarge?.copyWith(
-                  color: AppColors.onSurfaceDim,
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -159,7 +159,7 @@ class _FareHistoryScreenState extends ConsumerState<FareHistoryScreen> {
                 Text(
                   dateLabel,
                   style: theme.textTheme.labelLarge?.copyWith(
-                    color: AppColors.onSurfaceDim,
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.sm),

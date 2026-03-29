@@ -107,7 +107,7 @@ class _ProfileSetupScreenState extends ConsumerState<ProfileSetupScreen> {
               Text(
                 'Full Name',
                 style: theme.textTheme.labelLarge?.copyWith(
-                  color: AppColors.onSurfaceDim,
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
                 ),
               ),
               const SizedBox(height: AppSpacing.sm),
@@ -131,7 +131,7 @@ class _ProfileSetupScreenState extends ConsumerState<ProfileSetupScreen> {
               Text(
                 'University',
                 style: theme.textTheme.labelLarge?.copyWith(
-                  color: AppColors.onSurfaceDim,
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
                 ),
               ),
               const SizedBox(height: AppSpacing.sm),
@@ -148,7 +148,7 @@ class _ProfileSetupScreenState extends ConsumerState<ProfileSetupScreen> {
               Text(
                 'Gender',
                 style: theme.textTheme.labelLarge?.copyWith(
-                  color: AppColors.onSurfaceDim,
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
                 ),
               ),
               const SizedBox(height: AppSpacing.sm),

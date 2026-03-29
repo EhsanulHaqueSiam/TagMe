@@ -45,7 +45,7 @@ class SettingsScreen extends StatelessWidget {
             child: Text(
               'Rides',
               style: theme.textTheme.labelMedium?.copyWith(
-                color: AppColors.onSurfaceDim,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
               ),
             ),
           ),
@@ -82,7 +82,7 @@ class SettingsScreen extends StatelessWidget {
             child: Text(
               'Legal',
               style: theme.textTheme.labelMedium?.copyWith(
-                color: AppColors.onSurfaceDim,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
               ),
             ),
           ),
@@ -119,7 +119,7 @@ class SettingsScreen extends StatelessWidget {
             child: Text(
               'About',
               style: theme.textTheme.labelMedium?.copyWith(
-                color: AppColors.onSurfaceDim,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
               ),
             ),
           ),

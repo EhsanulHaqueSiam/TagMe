@@ -32,7 +32,7 @@ class LocationShareCard extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: const Color(0xFFE8F0FE),
+              color: Theme.of(context).colorScheme.primaryContainer,
               border: Border.all(
                 color: AppColors.accent.withValues(alpha: 0.3),
               ),
@@ -48,7 +48,7 @@ class LocationShareCard extends StatelessWidget {
                     child: Text(
                       message.senderName,
                       style: theme.textTheme.bodySmall?.copyWith(
-                        color: AppColors.onSurfaceDim,
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
                       ),
                     ),
                   ),

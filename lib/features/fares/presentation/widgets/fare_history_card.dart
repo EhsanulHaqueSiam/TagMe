@@ -71,20 +71,20 @@ class FareHistoryCard extends StatelessWidget {
                 Icon(
                   transportIcon,
                   size: 16,
-                  color: AppColors.onSurfaceDim,
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
                 ),
                 const SizedBox(width: AppSpacing.xs),
                 Text(
                   dateFormat.format(entry.rideDate),
                   style: theme.textTheme.bodySmall?.copyWith(
-                    color: AppColors.onSurfaceDim,
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
                   ),
                 ),
                 const Spacer(),
                 Text(
                   '${entry.amount} BDT',
                   style: theme.textTheme.bodySmall?.copyWith(
-                    color: AppColors.onSurfaceDim,
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
                   ),
                 ),
               ],
@@ -94,7 +94,7 @@ class FareHistoryCard extends StatelessWidget {
             Text(
               'Split with co-rider',
               style: theme.textTheme.bodySmall?.copyWith(
-                color: AppColors.onSurfaceDim,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
               ),
             ),
             const SizedBox(height: AppSpacing.xs),

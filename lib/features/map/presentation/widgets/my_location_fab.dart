@@ -20,7 +20,7 @@ class MyLocationFab extends ConsumerWidget {
       height: 56,
       child: FloatingActionButton(
         onPressed: onPressed,
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 4,
         child: Semantics(
           label: 'Center map on my location',

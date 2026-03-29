@@ -51,7 +51,7 @@ class BalanceRow extends StatelessWidget {
       );
     } else {
       balanceText = 'Settled';
-      balanceColor = AppColors.onSurfaceDim;
+      balanceColor = Theme.of(context).colorScheme.onSurfaceVariant;
       balanceStyle = theme.textTheme.bodySmall?.copyWith(
         color: balanceColor,
       );
@@ -111,7 +111,7 @@ class BalanceRow extends StatelessWidget {
                     Text(
                       university,
                       style: theme.textTheme.bodySmall?.copyWith(
-                        color: AppColors.onSurfaceDim,
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,

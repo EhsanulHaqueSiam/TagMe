@@ -5,7 +5,7 @@ import 'package:tagme/core/constants/app_colors.dart';
 ///
 /// Shows a 40px container with a pulsing outer ring and 12px solid inner dot.
 /// When [isStale] is true (location >60s old), the pulse stops and the marker
-/// dims to [AppColors.onSurfaceDim]. Respects reduced motion preferences.
+/// dims to the theme's `onSurfaceVariant` color. Respects reduced motion preferences.
 class LiveLocationMarker extends StatefulWidget {
   const LiveLocationMarker({
     super.key,
@@ -67,7 +67,7 @@ class _LiveLocationMarkerState extends State<LiveLocationMarker>
 
   @override
   Widget build(BuildContext context) {
-    final color = widget.isStale ? AppColors.onSurfaceDim : AppColors.accent;
+    final color = widget.isStale ? Theme.of(context).colorScheme.onSurfaceVariant : AppColors.accent;
     final disableAnimations = MediaQuery.of(context).disableAnimations;
 
     final semanticLabel = widget.userName != null

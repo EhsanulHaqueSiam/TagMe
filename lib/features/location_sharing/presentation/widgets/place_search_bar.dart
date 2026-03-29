@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:tagme/core/constants/app_colors.dart';
 
 /// Search text field with 300ms debounce for place autocomplete.
 ///
@@ -69,7 +68,7 @@ class _PlaceSearchBarState extends State<PlaceSearchBar> {
 
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.surfaceVariant,
+        color: Theme.of(context).colorScheme.surfaceContainerHighest,
         borderRadius: BorderRadius.circular(12),
       ),
       child: TextField(
@@ -79,19 +78,19 @@ class _PlaceSearchBarState extends State<PlaceSearchBar> {
         decoration: InputDecoration(
           hintText: 'Search for a place...',
           hintStyle: theme.textTheme.bodyLarge?.copyWith(
-            color: AppColors.onSurfaceDim,
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
           ),
-          prefixIcon: const Icon(
+          prefixIcon: Icon(
             Icons.search,
             size: 20,
-            color: AppColors.onSurfaceDim,
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
           ),
           suffixIcon: _hasText
               ? IconButton(
-                  icon: const Icon(
+                  icon: Icon(
                     Icons.close,
                     size: 20,
-                    color: AppColors.onSurfaceDim,
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
                   ),
                   onPressed: _clearText,
                 )

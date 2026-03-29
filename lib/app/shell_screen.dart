@@ -25,9 +25,9 @@ class ShellScreen extends ConsumerWidget {
     return Scaffold(
       body: navigationShell,
       bottomNavigationBar: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           border: Border(
-            top: BorderSide(color: AppColors.surfaceVariant),
+            top: BorderSide(color: Theme.of(context).colorScheme.surfaceContainerHighest),
           ),
         ),
         child: NavigationBar(
@@ -36,7 +36,7 @@ class ShellScreen extends ConsumerWidget {
             index,
             initialLocation: index == navigationShell.currentIndex,
           ),
-          backgroundColor: AppColors.secondary,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           indicatorColor: AppColors.accent.withValues(alpha: 0.12),
           height: 56,
           destinations: [

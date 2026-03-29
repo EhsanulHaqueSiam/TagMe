@@ -72,15 +72,15 @@ class AvatarPicker extends StatelessWidget {
             // Avatar circle
             CircleAvatar(
               radius: 48,
-              backgroundColor: AppColors.surfaceVariant,
+              backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
               backgroundImage: currentPhotoPath != null
                   ? FileImage(File(currentPhotoPath!))
                   : null,
               child: currentPhotoPath == null
-                  ? const Icon(
+                  ? Icon(
                       Icons.person,
                       size: 48,
-                      color: Color(0xFF9AA0A6), // gray-400
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
                     )
                   : null,
             ),

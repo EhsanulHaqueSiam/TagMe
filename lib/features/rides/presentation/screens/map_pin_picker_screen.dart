@@ -213,7 +213,7 @@ class _MapPinPickerScreenState extends ConsumerState<MapPinPickerScreen> {
             right: AppSpacing.md,
             child: Container(
               decoration: BoxDecoration(
-                color: AppColors.secondary,
+                color: Theme.of(context).colorScheme.surface,
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
@@ -274,7 +274,7 @@ class _MapPinPickerScreenState extends ConsumerState<MapPinPickerScreen> {
       height: 16,
       width: 200,
       decoration: BoxDecoration(
-        color: AppColors.surfaceVariant,
+        color: Theme.of(context).colorScheme.surfaceContainerHighest,
         borderRadius: BorderRadius.circular(4),
       ),
     );

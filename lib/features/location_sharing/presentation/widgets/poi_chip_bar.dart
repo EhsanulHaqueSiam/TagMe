@@ -44,17 +44,17 @@ class POIChipBar extends StatelessWidget {
               avatar: Icon(
                 _chipIcons[category.id] ?? Icons.place,
                 size: 16,
-                color: isSelected ? Colors.white : AppColors.onSurfaceDim,
+                color: isSelected ? Colors.white : Theme.of(context).colorScheme.onSurfaceVariant,
               ),
               selected: isSelected,
               onSelected: (_) {
                 onCategorySelected(isSelected ? null : category.id);
               },
               selectedColor: AppColors.accent,
-              backgroundColor: AppColors.surfaceVariant,
+              backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
               labelStyle: TextStyle(
                 fontSize: 12,
-                color: isSelected ? Colors.white : AppColors.onSurfaceDim,
+                color: isSelected ? Colors.white : Theme.of(context).colorScheme.onSurfaceVariant,
               ),
               materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
               visualDensity: VisualDensity.compact,

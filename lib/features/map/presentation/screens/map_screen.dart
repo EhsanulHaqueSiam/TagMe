@@ -370,7 +370,7 @@ class _MapScreenState extends ConsumerState<MapScreen> {
                               style: Theme.of(context)
                                   .textTheme
                                   .bodySmall
-                                  ?.copyWith(color: AppColors.onSurfaceDim),
+                                  ?.copyWith(color: Theme.of(context).colorScheme.onSurfaceVariant),
                             ),
                           ),
                           const SizedBox(width: 8),
