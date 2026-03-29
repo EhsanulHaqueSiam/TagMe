@@ -2,6 +2,14 @@
 
 A mobile app for students in Bangladesh to find ride-sharing partners. See nearby peers on a map, post or search rides, match with compatible riders, chat, and split fares.
 
+## Screenshots
+
+<p align="center">
+  <img src="screenshots/01_map_screen.png" width="250" alt="Map Screen" />
+  <img src="screenshots/02_rides_screen.png" width="250" alt="Rides Screen" />
+  <img src="screenshots/03_chat_screen.png" width="250" alt="Chat Screen" />
+</p>
+
 ## Features
 
 - **Interactive Map** — See nearby students with their name, photo, university, route, and transport type
