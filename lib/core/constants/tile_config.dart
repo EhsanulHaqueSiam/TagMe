@@ -2,24 +2,17 @@ import 'package:flutter/material.dart';
 
 /// Centralized map tile configuration for all FlutterMap TileLayer widgets.
 ///
-/// Uses CARTO tiles — free, no API key, no signup, unlimited for apps.
-/// Voyager (light) and Dark Matter (dark) auto-switch with system theme.
+/// Uses CARTO Voyager tiles for both themes — readable, colorful, modern.
+/// Free, no API key, no signup required.
 abstract final class TileConfig {
-  /// CARTO Voyager — clean, colorful, modern. For light theme.
+  /// CARTO Voyager — clean, labeled, great contrast in any context.
   static const String _voyager =
       'https://basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
 
-  /// CARTO Dark Matter — sleek dark mode. For dark theme.
-  static const String _darkMatter =
-      'https://basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';
+  /// Returns tile URL. Voyager works well for both light and dark app themes.
+  static String tileUrl(BuildContext context) => _voyager;
 
-  /// Returns tile URL based on current brightness.
-  static String tileUrl(BuildContext context) {
-    final brightness = MediaQuery.platformBrightnessOf(context);
-    return brightness == Brightness.dark ? _darkMatter : _voyager;
-  }
-
-  /// Legacy accessor — defaults to Voyager (light).
+  /// Legacy accessor.
   static const String stadiaMapsTemplate = _voyager;
 
   /// User agent must match the Android applicationId.

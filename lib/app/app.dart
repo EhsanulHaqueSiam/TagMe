@@ -14,6 +14,8 @@ class TagMeApp extends ConsumerWidget {
     return MaterialApp.router(
       title: 'TagMe',
       theme: appTheme,
+      darkTheme: appDarkTheme,
+      themeMode: ThemeMode.system,
       routerConfig: router,
       debugShowCheckedModeBanner: false,
     );
