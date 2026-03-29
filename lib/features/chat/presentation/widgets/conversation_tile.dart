@@ -27,6 +27,7 @@ class ConversationTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final cs = theme.colorScheme;
     final unreadCount = conversation.unreadCounts[currentUserId] ?? 0;
     final universityColor = AppColors.getUniversityColor(otherUniversity);
     final initial =
@@ -42,10 +43,10 @@ class ConversationTile extends StatelessWidget {
         onTap: onTap,
         child: Container(
           padding: const EdgeInsets.all(AppSpacing.md),
-          decoration: const BoxDecoration(
-            color: AppColors.secondary,
+          decoration: BoxDecoration(
+            color: cs.surface,
             border: Border(
-              bottom: BorderSide(color: Color(0xFFE8EAED)),
+              bottom: BorderSide(color: cs.outlineVariant),
             ),
           ),
           child: Row(
@@ -58,11 +59,11 @@ class ConversationTile extends StatelessWidget {
                 ),
                 child: CircleAvatar(
                   radius: 22,
-                  backgroundColor: AppColors.surfaceVariant,
+                  backgroundColor: cs.surfaceContainerHighest,
                   child: Text(
                     initial,
                     style: theme.textTheme.labelLarge?.copyWith(
-                      color: AppColors.onSurfaceDim,
+                      color: cs.onSurfaceVariant,
                     ),
                   ),
                 ),
@@ -88,7 +89,7 @@ class ConversationTile extends StatelessWidget {
                         Text(
                           timestampText,
                           style: theme.textTheme.bodySmall?.copyWith(
-                            color: AppColors.onSurfaceDim,
+                            color: cs.onSurfaceVariant,
                           ),
                         ),
                       ],
@@ -98,7 +99,7 @@ class ConversationTile extends StatelessWidget {
                     Text(
                       conversation.lastMessage ?? '',
                       style: theme.textTheme.bodySmall?.copyWith(
-                        color: AppColors.onSurfaceDim,
+                        color: cs.onSurfaceVariant,
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -108,7 +109,7 @@ class ConversationTile extends StatelessWidget {
                     Text(
                       '${conversation.rideOrigin} -> ${conversation.rideDestination}',
                       style: theme.textTheme.bodySmall?.copyWith(
-                        color: AppColors.onSurfaceDim,
+                        color: cs.onSurfaceVariant,
                         fontSize: 12,
                       ),
                       maxLines: 1,

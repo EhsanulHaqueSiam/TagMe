@@ -25,6 +25,7 @@ class EmbeddedLiveMap extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final cs = Theme.of(context).colorScheme;
     final liveLocationsAsync =
         ref.watch(activeLiveLocationsProvider(conversationId));
 
@@ -35,24 +36,24 @@ class EmbeddedLiveMap extends ConsumerWidget {
         width: double.infinity,
         child: liveLocationsAsync.when(
           loading: () => Container(
-            color: AppColors.surfaceVariant,
+            color: cs.surfaceContainerHighest,
             child: const Center(
               child: CircularProgressIndicator(strokeWidth: 2),
             ),
           ),
           error: (_, __) => Container(
-            color: AppColors.surfaceVariant,
-            child: const Center(
-              child: Icon(Icons.map, color: AppColors.onSurfaceDim),
+            color: cs.surfaceContainerHighest,
+            child: Center(
+              child: Icon(Icons.map, color: cs.onSurfaceVariant),
             ),
           ),
           data: (locations) {
             if (locations.isEmpty) {
               return Container(
-                color: AppColors.surfaceVariant,
-                child: const Center(
+                color: cs.surfaceContainerHighest,
+                child: Center(
                   child:
-                      Icon(Icons.location_off, color: AppColors.onSurfaceDim),
+                      Icon(Icons.location_off, color: cs.onSurfaceVariant),
                 ),
               );
             }

@@ -55,6 +55,7 @@ class _PostRideScreenState extends ConsumerState<PostRideScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final cs = theme.colorScheme;
 
     return Scaffold(
       appBar: AppBar(
@@ -180,7 +181,7 @@ class _PostRideScreenState extends ConsumerState<PostRideScreen> {
     return Text(
       text,
       style: theme.textTheme.labelLarge?.copyWith(
-        color: AppColors.onSurfaceDim,
+        color: theme.colorScheme.onSurfaceVariant,
       ),
     );
   }
@@ -199,14 +200,14 @@ class _PostRideScreenState extends ConsumerState<PostRideScreen> {
         height: 48,
         padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
         decoration: BoxDecoration(
-          color: AppColors.surfaceVariant,
+          color: theme.colorScheme.surfaceContainerHighest,
           borderRadius: BorderRadius.circular(12),
         ),
         alignment: Alignment.centerLeft,
         child: Text(
           hasAddress ? address : placeholder,
           style: theme.textTheme.bodyLarge?.copyWith(
-            color: hasAddress ? null : AppColors.onSurfaceDim,
+            color: hasAddress ? null : theme.colorScheme.onSurfaceVariant,
           ),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
@@ -235,7 +236,7 @@ class _PostRideScreenState extends ConsumerState<PostRideScreen> {
             decoration: BoxDecoration(
               color: isSelected
                   ? Colors.transparent
-                  : AppColors.surfaceVariant,
+                  : theme.colorScheme.surfaceContainerHighest,
               borderRadius: BorderRadius.circular(12),
               border: isSelected
                   ? Border.all(color: AppColors.accent, width: 2)
@@ -246,7 +247,7 @@ class _PostRideScreenState extends ConsumerState<PostRideScreen> {
               style: theme.textTheme.bodySmall?.copyWith(
                 color: isSelected
                     ? AppColors.accent
-                    : AppColors.onSurfaceDim,
+                    : theme.colorScheme.onSurfaceVariant,
               ),
             ),
           ),
@@ -286,14 +287,14 @@ class _PostRideScreenState extends ConsumerState<PostRideScreen> {
               horizontal: AppSpacing.md,
             ),
             decoration: BoxDecoration(
-              color: AppColors.surfaceVariant,
+              color: theme.colorScheme.surfaceContainerHighest,
               borderRadius: BorderRadius.circular(12),
             ),
             alignment: Alignment.centerLeft,
             child: Text(
               timeText,
               style: theme.textTheme.bodyLarge?.copyWith(
-                color: hasTime ? null : AppColors.onSurfaceDim,
+                color: hasTime ? null : theme.colorScheme.onSurfaceVariant,
               ),
             ),
           ),
@@ -304,7 +305,7 @@ class _PostRideScreenState extends ConsumerState<PostRideScreen> {
             child: Text(
               'Tomorrow',
               style: theme.textTheme.bodySmall?.copyWith(
-                color: AppColors.onSurfaceDim,
+                color: theme.colorScheme.onSurfaceVariant,
               ),
             ),
           ),

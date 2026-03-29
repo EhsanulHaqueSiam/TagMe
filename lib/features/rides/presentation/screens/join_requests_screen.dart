@@ -54,6 +54,7 @@ class _JoinRequestsScreenState extends ConsumerState<JoinRequestsScreen>
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final cs = theme.colorScheme;
     final requestsAsync = ref.watch(
       joinRequestsForRideProvider(widget.rideId),
     );
@@ -87,7 +88,7 @@ class _JoinRequestsScreenState extends ConsumerState<JoinRequestsScreen>
                 child: Text(
                   'No requests yet. Share your ride to get co-riders.',
                   style: theme.textTheme.bodyLarge?.copyWith(
-                    color: AppColors.onSurfaceDim,
+                    color: theme.colorScheme.onSurfaceVariant,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -223,7 +224,7 @@ class _JoinRequestsScreenState extends ConsumerState<JoinRequestsScreen>
               child: Container(
                 height: 80,
                 decoration: BoxDecoration(
-                  color: AppColors.surfaceVariant,
+                  color: theme.colorScheme.surfaceContainerHighest,
                   borderRadius: BorderRadius.circular(12),
                 ),
               ),
@@ -261,7 +262,7 @@ class _RequestCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(AppSpacing.md),
       decoration: BoxDecoration(
-        color: AppColors.secondary,
+        color: theme.colorScheme.surface,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
@@ -303,14 +304,14 @@ class _RequestCard extends StatelessWidget {
                     Text(
                       request.requesterUniversity,
                       style: theme.textTheme.bodySmall?.copyWith(
-                        color: AppColors.onSurfaceDim,
+                        color: theme.colorScheme.onSurfaceVariant,
                       ),
                     ),
                     if (request.createdAt != null)
                       Text(
                         _formatRelativeTime(request.createdAt!),
                         style: theme.textTheme.bodySmall?.copyWith(
-                          color: AppColors.onSurfaceDim,
+                          color: theme.colorScheme.onSurfaceVariant,
                         ),
                       ),
                   ],
@@ -339,7 +340,7 @@ class _RequestCard extends StatelessWidget {
                           height: 40,
                           decoration: BoxDecoration(
                             color: isRideFull
-                                ? AppColors.onSurfaceDim.withValues(
+                                ? theme.colorScheme.onSurfaceVariant.withValues(
                                     alpha: 0.3,
                                   )
                                 : AppColors.success,
@@ -366,7 +367,7 @@ class _RequestCard extends StatelessWidget {
                           height: 40,
                           decoration: BoxDecoration(
                             color: isRideFull
-                                ? AppColors.onSurfaceDim.withValues(
+                                ? theme.colorScheme.onSurfaceVariant.withValues(
                                     alpha: 0.3,
                                   )
                                 : AppColors.destructive,
@@ -390,7 +391,7 @@ class _RequestCard extends StatelessWidget {
               child: Text(
                 'Ride is now full',
                 style: theme.textTheme.bodySmall?.copyWith(
-                  color: AppColors.onSurfaceDim,
+                  color: theme.colorScheme.onSurfaceVariant,
                 ),
               ),
             ),

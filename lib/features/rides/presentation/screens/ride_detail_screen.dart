@@ -53,6 +53,7 @@ class _RideDetailScreenState extends ConsumerState<RideDetailScreen>
   Widget build(BuildContext context) {
     final rideAsync = ref.watch(rideDetailProvider(widget.rideId));
     final theme = Theme.of(context);
+    final cs = theme.colorScheme;
 
     final profileAsync = ref.watch(profileProvider);
     final currentUserId = profileAsync.value?.id ?? '';
@@ -235,17 +236,17 @@ class _RideDetailScreenState extends ConsumerState<RideDetailScreen>
                 Text(
                   ride.posterUniversity,
                   style: theme.textTheme.labelLarge?.copyWith(
-                    color: AppColors.onSurfaceDim,
+                    color: theme.colorScheme.onSurfaceVariant,
                   ),
                 ),
                 Row(
                   children: [
-                    Icon(genderIcon, size: 14, color: AppColors.onSurfaceDim),
+                    Icon(genderIcon, size: 14, color: theme.colorScheme.onSurfaceVariant),
                     const SizedBox(width: 4),
                     Text(
                       ride.posterGender,
                       style: theme.textTheme.bodySmall?.copyWith(
-                        color: AppColors.onSurfaceDim,
+                        color: theme.colorScheme.onSurfaceVariant,
                       ),
                     ),
                   ],
@@ -262,7 +263,7 @@ class _RideDetailScreenState extends ConsumerState<RideDetailScreen>
     return Container(
       padding: const EdgeInsets.all(AppSpacing.md),
       decoration: BoxDecoration(
-        color: AppColors.secondary,
+        color: theme.colorScheme.surface,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
@@ -283,6 +284,7 @@ class _RideDetailScreenState extends ConsumerState<RideDetailScreen>
   }
 
   Widget _buildMiniMap(Ride ride) {
+    final cs = Theme.of(context).colorScheme;
     // Build polyline points from route
     final polylinePoints = ride.routePolyline
         .where((p) => p.length >= 2)
@@ -375,7 +377,7 @@ class _RideDetailScreenState extends ConsumerState<RideDetailScreen>
                             color: AppColors.accent,
                             width: 2,
                           ),
-                          color: AppColors.secondary,
+                          color: cs.surface,
                         ),
                       ),
                     ),
@@ -444,18 +446,18 @@ class _RideDetailScreenState extends ConsumerState<RideDetailScreen>
         vertical: AppSpacing.xs,
       ),
       decoration: BoxDecoration(
-        color: AppColors.surfaceVariant,
+        color: theme.colorScheme.surfaceContainerHighest,
         borderRadius: BorderRadius.circular(8),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, size: 16, color: AppColors.onSurfaceDim),
+          Icon(icon, size: 16, color: theme.colorScheme.onSurfaceVariant),
           const SizedBox(width: 4),
           Text(
             label,
             style: theme.textTheme.bodySmall?.copyWith(
-              color: AppColors.onSurfaceDim,
+              color: theme.colorScheme.onSurfaceVariant,
             ),
           ),
         ],
@@ -482,7 +484,7 @@ class _RideDetailScreenState extends ConsumerState<RideDetailScreen>
       width: double.infinity,
       padding: const EdgeInsets.all(AppSpacing.md),
       decoration: BoxDecoration(
-        color: AppColors.secondary,
+        color: theme.colorScheme.surface,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
@@ -506,14 +508,14 @@ class _RideDetailScreenState extends ConsumerState<RideDetailScreen>
           Text(
             '(~$perPerson BDT per person)',
             style: theme.textTheme.bodySmall?.copyWith(
-              color: AppColors.onSurfaceDim,
+              color: theme.colorScheme.onSurfaceVariant,
             ),
           ),
           const SizedBox(height: 2),
           Text(
             'Based on ${ride.routeDistanceKm.toStringAsFixed(1)}km at $farePerKm BDT/km',
             style: theme.textTheme.bodySmall?.copyWith(
-              color: AppColors.onSurfaceDim,
+              color: theme.colorScheme.onSurfaceVariant,
             ),
           ),
         ],
@@ -599,7 +601,7 @@ class _RideDetailScreenState extends ConsumerState<RideDetailScreen>
             child: Text(
               'Ride Full',
               style: theme.textTheme.bodyLarge?.copyWith(
-                color: AppColors.onSurfaceDim,
+                color: theme.colorScheme.onSurfaceVariant,
               ),
             ),
           );
@@ -896,6 +898,7 @@ class _RideDetailScreenState extends ConsumerState<RideDetailScreen>
   }
 
   Widget _buildShimmer(ThemeData theme) {
+    final cs = theme.colorScheme;
     return Padding(
       padding: const EdgeInsets.all(AppSpacing.md),
       child: FadeTransition(
@@ -906,9 +909,9 @@ class _RideDetailScreenState extends ConsumerState<RideDetailScreen>
             // Poster shimmer
             Row(
               children: [
-                const CircleAvatar(
+                CircleAvatar(
                   radius: 28,
-                  backgroundColor: AppColors.surfaceVariant,
+                  backgroundColor: cs.surfaceContainerHighest,
                 ),
                 const SizedBox(width: 12),
                 Column(
@@ -918,7 +921,7 @@ class _RideDetailScreenState extends ConsumerState<RideDetailScreen>
                       width: 120,
                       height: 16,
                       decoration: BoxDecoration(
-                        color: AppColors.surfaceVariant,
+                        color: cs.surfaceContainerHighest,
                         borderRadius: BorderRadius.circular(4),
                       ),
                     ),
@@ -927,7 +930,7 @@ class _RideDetailScreenState extends ConsumerState<RideDetailScreen>
                       width: 80,
                       height: 12,
                       decoration: BoxDecoration(
-                        color: AppColors.surfaceVariant,
+                        color: cs.surfaceContainerHighest,
                         borderRadius: BorderRadius.circular(4),
                       ),
                     ),
@@ -940,7 +943,7 @@ class _RideDetailScreenState extends ConsumerState<RideDetailScreen>
             Container(
               height: 120,
               decoration: BoxDecoration(
-                color: AppColors.surfaceVariant,
+                color: cs.surfaceContainerHighest,
                 borderRadius: BorderRadius.circular(12),
               ),
             ),
@@ -949,7 +952,7 @@ class _RideDetailScreenState extends ConsumerState<RideDetailScreen>
             Container(
               height: 80,
               decoration: BoxDecoration(
-                color: AppColors.surfaceVariant,
+                color: cs.surfaceContainerHighest,
                 borderRadius: BorderRadius.circular(12),
               ),
             ),

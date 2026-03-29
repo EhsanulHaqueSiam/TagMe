@@ -56,7 +56,7 @@ class _LiveSharingBannerState extends State<LiveSharingBanner>
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-      color: const Color(0xFFE8F0FE),
+      color: theme.colorScheme.primaryContainer,
       child: Row(
         children: [
           // Pulsing green dot
@@ -86,7 +86,7 @@ class _LiveSharingBannerState extends State<LiveSharingBanner>
                 Text(
                   'Stops in $minutes:$seconds',
                   style: theme.textTheme.bodySmall?.copyWith(
-                    color: AppColors.onSurfaceDim,
+                    color: theme.colorScheme.onSurfaceVariant,
                   ),
                 ),
               ],

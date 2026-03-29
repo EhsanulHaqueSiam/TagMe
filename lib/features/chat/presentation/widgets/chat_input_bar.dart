@@ -51,12 +51,14 @@ class _ChatInputBarState extends State<ChatInputBar> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final cs = theme.colorScheme;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
-      decoration: const BoxDecoration(
-        color: AppColors.secondary,
+      decoration: BoxDecoration(
+        color: cs.surface,
         border: Border(
-          top: BorderSide(color: Color(0xFFE8EAED)),
+          top: BorderSide(color: cs.outlineVariant),
         ),
       ),
       child: Row(
@@ -70,7 +72,7 @@ class _ChatInputBarState extends State<ChatInputBar> {
               child: IconButton(
                 onPressed: widget.onShareLocation,
                 icon: const Icon(Icons.location_on),
-                color: AppColors.onSurfaceDim,
+                color: cs.onSurfaceVariant,
                 padding: EdgeInsets.zero,
               ),
             ),
@@ -85,7 +87,7 @@ class _ChatInputBarState extends State<ChatInputBar> {
               child: IconButton(
                 onPressed: widget.onSharePhone,
                 icon: const Icon(Icons.phone),
-                color: AppColors.onSurfaceDim,
+                color: cs.onSurfaceVariant,
                 padding: EdgeInsets.zero,
               ),
             ),
@@ -96,18 +98,18 @@ class _ChatInputBarState extends State<ChatInputBar> {
             child: Container(
               constraints: const BoxConstraints(minHeight: 32),
               decoration: BoxDecoration(
-                color: AppColors.surfaceVariant,
+                color: cs.surfaceContainerHighest,
                 borderRadius: BorderRadius.circular(12),
               ),
               child: TextField(
                 controller: _controller,
                 maxLines: 4,
                 minLines: 1,
-                style: Theme.of(context).textTheme.bodyLarge,
+                style: theme.textTheme.bodyLarge,
                 decoration: InputDecoration(
                   hintText: 'Type a message...',
-                  hintStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        color: AppColors.onSurfaceDim,
+                  hintStyle: theme.textTheme.bodyLarge?.copyWith(
+                        color: cs.onSurfaceVariant,
                       ),
                   border: InputBorder.none,
                   contentPadding: const EdgeInsets.symmetric(

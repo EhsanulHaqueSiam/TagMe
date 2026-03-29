@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:tagme/core/constants/app_colors.dart';
 import 'package:tagme/features/location_sharing/data/services/geocoding_service.dart';
 import 'package:tagme/features/location_sharing/providers/geocoding_providers.dart';
 import 'package:tagme/features/location_sharing/presentation/widgets/place_result_tile.dart';
@@ -69,6 +68,7 @@ class _PlaceSearchScreenState extends ConsumerState<PlaceSearchScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final cs = theme.colorScheme;
 
     return Scaffold(
       appBar: AppBar(
@@ -109,13 +109,13 @@ class _PlaceSearchScreenState extends ConsumerState<PlaceSearchScreen> {
               Icon(
                 Icons.error_outline,
                 size: 48,
-                color: AppColors.onSurfaceDim,
+                color: theme.colorScheme.onSurfaceVariant,
               ),
               const SizedBox(height: 16),
               Text(
                 _error!,
                 style: theme.textTheme.bodyLarge?.copyWith(
-                  color: AppColors.onSurfaceDim,
+                  color: theme.colorScheme.onSurfaceVariant,
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -134,13 +134,13 @@ class _PlaceSearchScreenState extends ConsumerState<PlaceSearchScreen> {
             Icon(
               Icons.search,
               size: 48,
-              color: AppColors.onSurfaceDim,
+              color: theme.colorScheme.onSurfaceVariant,
             ),
             const SizedBox(height: 16),
             Text(
               'Type to search for places',
               style: theme.textTheme.bodyLarge?.copyWith(
-                color: AppColors.onSurfaceDim,
+                color: theme.colorScheme.onSurfaceVariant,
               ),
             ),
           ],
@@ -157,13 +157,13 @@ class _PlaceSearchScreenState extends ConsumerState<PlaceSearchScreen> {
             Icon(
               Icons.location_off,
               size: 48,
-              color: AppColors.onSurfaceDim,
+              color: theme.colorScheme.onSurfaceVariant,
             ),
             const SizedBox(height: 16),
             Text(
               'No results for "$_lastQuery"',
               style: theme.textTheme.bodyLarge?.copyWith(
-                color: AppColors.onSurfaceDim,
+                color: theme.colorScheme.onSurfaceVariant,
               ),
               textAlign: TextAlign.center,
             ),

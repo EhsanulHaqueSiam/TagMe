@@ -37,12 +37,14 @@ class _RidesTabScreenState extends ConsumerState<RidesTabScreen>
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final cs = theme.colorScheme;
     return Scaffold(
-      backgroundColor: AppColors.dominant,
+      backgroundColor: cs.surface,
       appBar: AppBar(
         title: Text(
           'Rides',
-          style: Theme.of(context).textTheme.titleLarge,
+          style: theme.textTheme.titleLarge,
         ),
         automaticallyImplyLeading: false,
         actions: [
@@ -54,7 +56,7 @@ class _RidesTabScreenState extends ConsumerState<RidesTabScreen>
         bottom: TabBar(
           controller: _tabController,
           labelColor: AppColors.accent,
-          unselectedLabelColor: AppColors.onSurfaceDim,
+          unselectedLabelColor: cs.onSurfaceVariant,
           indicatorColor: AppColors.accent,
           tabs: const [
             Tab(text: 'Nearby'),
@@ -75,7 +77,7 @@ class _RidesTabScreenState extends ConsumerState<RidesTabScreen>
         icon: const Icon(Icons.add, color: Colors.white),
         label: Text(
           'Post Ride',
-          style: Theme.of(context).textTheme.labelLarge?.copyWith(
+          style: theme.textTheme.labelLarge?.copyWith(
                 color: Colors.white,
               ),
         ),
@@ -140,6 +142,8 @@ class _NearbyTab extends ConsumerWidget {
 class _MyRidesTab extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final theme = Theme.of(context);
+    final cs = theme.colorScheme;
     final ridesAsync = ref.watch(myRidesProvider);
 
     return ridesAsync.when(
@@ -178,12 +182,9 @@ class _MyRidesTab extends ConsumerWidget {
                   ),
                   child: Text(
                     entry,
-                    style: Theme.of(context)
-                        .textTheme
-                        .labelLarge
-                        ?.copyWith(
-                          color: AppColors.onSurfaceDim,
-                        ),
+                    style: theme.textTheme.labelLarge?.copyWith(
+                      color: cs.onSurfaceVariant,
+                    ),
                   ),
                 );
               }
@@ -280,6 +281,7 @@ class _ShimmerListState extends State<_ShimmerList>
 
   @override
   Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
     return Padding(
       padding: const EdgeInsets.all(AppSpacing.md),
       child: Column(
@@ -293,7 +295,7 @@ class _ShimmerListState extends State<_ShimmerList>
               child: Container(
                 height: 120,
                 decoration: BoxDecoration(
-                  color: AppColors.surfaceVariant,
+                  color: cs.surfaceContainerHighest,
                   borderRadius: BorderRadius.circular(12),
                 ),
               ),
@@ -318,6 +320,7 @@ class _EmptyState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final cs = theme.colorScheme;
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(AppSpacing.xl),
@@ -333,7 +336,7 @@ class _EmptyState extends StatelessWidget {
             Text(
               body,
               style: theme.textTheme.bodyLarge?.copyWith(
-                color: AppColors.onSurfaceDim,
+                color: cs.onSurfaceVariant,
               ),
               textAlign: TextAlign.center,
             ),
@@ -356,6 +359,7 @@ class _ErrorBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(AppSpacing.xl),
@@ -364,8 +368,8 @@ class _ErrorBanner extends StatelessWidget {
           children: [
             Text(
               message,
-              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    color: AppColors.onSurfaceDim,
+              style: theme.textTheme.bodyLarge?.copyWith(
+                    color: theme.colorScheme.onSurfaceVariant,
                   ),
               textAlign: TextAlign.center,
             ),

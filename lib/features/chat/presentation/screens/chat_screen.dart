@@ -94,6 +94,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final cs = theme.colorScheme;
     final profileAsync = ref.watch(profileProvider);
     final currentUserId = profileAsync.value?.id ?? '';
     final currentUserName = profileAsync.value?.name ?? '';
@@ -116,7 +117,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
     final universityColor = AppColors.getUniversityColor(otherUniversity);
 
     return Scaffold(
-      backgroundColor: AppColors.dominant,
+      backgroundColor: cs.surface,
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
@@ -131,7 +132,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
               ),
               child: CircleAvatar(
                 radius: 16,
-                backgroundColor: AppColors.surfaceVariant,
+                backgroundColor: cs.surfaceContainerHighest,
                 child: Text(
                   otherName.isNotEmpty ? otherName[0].toUpperCase() : '?',
                   style: theme.textTheme.bodySmall?.copyWith(
@@ -155,7 +156,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
                     Text(
                       otherUniversity,
                       style: theme.textTheme.bodySmall?.copyWith(
-                        color: AppColors.onSurfaceDim,
+                        color: cs.onSurfaceVariant,
                         fontSize: 11,
                       ),
                     ),
@@ -210,7 +211,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
                 child: Text(
                   'Could not load messages.',
                   style: theme.textTheme.bodyLarge?.copyWith(
-                    color: AppColors.onSurfaceDim,
+                    color: cs.onSurfaceVariant,
                   ),
                 ),
               ),
@@ -226,7 +227,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
                     child: Text(
                       'Say hello to start the conversation',
                       style: theme.textTheme.bodySmall?.copyWith(
-                        color: AppColors.onSurfaceDim,
+                        color: cs.onSurfaceVariant,
                       ),
                     ),
                   );
@@ -362,10 +363,10 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
       onTap: () => context.push('/rides/${conversation.rideId}'),
       child: Container(
         padding: const EdgeInsets.all(AppSpacing.md),
-        decoration: const BoxDecoration(
-          color: AppColors.secondary,
+        decoration: BoxDecoration(
+          color: theme.colorScheme.surface,
           border: Border(
-            bottom: BorderSide(color: Color(0xFFE8EAED)),
+            bottom: BorderSide(color: theme.colorScheme.outlineVariant),
           ),
         ),
         child: Row(
@@ -381,13 +382,13 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Icon(transportIcon, size: 16, color: AppColors.onSurfaceDim),
+                Icon(transportIcon, size: 16, color: theme.colorScheme.onSurfaceVariant),
                 if (departureText.isNotEmpty) ...[
                   const SizedBox(height: 4),
                   Text(
                     departureText,
                     style: theme.textTheme.bodySmall?.copyWith(
-                      color: AppColors.onSurfaceDim,
+                      color: theme.colorScheme.onSurfaceVariant,
                     ),
                   ),
                 ],
@@ -419,17 +420,17 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
       padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
       child: Row(
         children: [
-          const Expanded(child: Divider(color: Color(0xFFE8EAED))),
+          Expanded(child: Divider(color: theme.colorScheme.outlineVariant)),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
             child: Text(
               label,
               style: theme.textTheme.bodySmall?.copyWith(
-                color: AppColors.onSurfaceDim,
+                color: theme.colorScheme.onSurfaceVariant,
               ),
             ),
           ),
-          const Expanded(child: Divider(color: Color(0xFFE8EAED))),
+          Expanded(child: Divider(color: theme.colorScheme.outlineVariant)),
         ],
       ),
     );
@@ -640,6 +641,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
     String otherName,
   ) {
     final phoneController = TextEditingController();
+    final theme = Theme.of(context);
     var isSending = false;
 
     showDialog<void>(
@@ -678,7 +680,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
                 onPressed: () => Navigator.of(dialogContext).pop(),
                 child: Text(
                   "Don't Share",
-                  style: TextStyle(color: AppColors.onSurfaceDim),
+                  style: TextStyle(color: theme.colorScheme.onSurfaceVariant),
                 ),
               ),
               FilledButton(

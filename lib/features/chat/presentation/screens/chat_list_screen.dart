@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:tagme/core/constants/app_colors.dart';
 import 'package:tagme/core/constants/app_spacing.dart';
 import 'package:tagme/features/chat/presentation/widgets/conversation_tile.dart';
 import 'package:tagme/features/chat/providers/chat_providers.dart';
@@ -44,13 +43,14 @@ class _ChatListScreenState extends ConsumerState<ChatListScreen>
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final cs = theme.colorScheme;
     final currentUserId = ref.watch(profileProvider).value?.id ?? '';
     final conversationsAsync = currentUserId.isNotEmpty
         ? ref.watch(conversationListProvider(currentUserId))
         : null;
 
     return Scaffold(
-      backgroundColor: AppColors.dominant,
+      backgroundColor: cs.surface,
       appBar: AppBar(
         title: Text('Chats', style: theme.textTheme.titleLarge),
         automaticallyImplyLeading: false,
@@ -63,7 +63,7 @@ class _ChatListScreenState extends ConsumerState<ChatListScreen>
                 child: Text(
                   'Could not load chats. Pull down to retry.',
                   style: theme.textTheme.bodyLarge?.copyWith(
-                    color: AppColors.onSurfaceDim,
+                    color: cs.onSurfaceVariant,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -117,10 +117,10 @@ class _ChatListScreenState extends ConsumerState<ChatListScreen>
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(
+            Icon(
               Icons.chat_bubble_outline,
               size: 64,
-              color: AppColors.onSurfaceDim,
+              color: theme.colorScheme.onSurfaceVariant,
             ),
             const SizedBox(height: AppSpacing.md),
             Text(
@@ -132,7 +132,7 @@ class _ChatListScreenState extends ConsumerState<ChatListScreen>
             Text(
               'When you join a ride, you can chat with your co-riders here.',
               style: theme.textTheme.bodyLarge?.copyWith(
-                color: AppColors.onSurfaceDim,
+                color: theme.colorScheme.onSurfaceVariant,
               ),
               textAlign: TextAlign.center,
             ),
@@ -143,6 +143,7 @@ class _ChatListScreenState extends ConsumerState<ChatListScreen>
   }
 
   Widget _buildShimmer() {
+    final cs = Theme.of(context).colorScheme;
     return Padding(
       padding: const EdgeInsets.all(AppSpacing.md),
       child: FadeTransition(
@@ -154,9 +155,9 @@ class _ChatListScreenState extends ConsumerState<ChatListScreen>
               child: Row(
                 children: [
                   // Avatar shimmer
-                  const CircleAvatar(
+                  CircleAvatar(
                     radius: 22,
-                    backgroundColor: AppColors.surfaceVariant,
+                    backgroundColor: cs.surfaceContainerHighest,
                   ),
                   const SizedBox(width: 12),
                   // Text shimmer
@@ -168,7 +169,7 @@ class _ChatListScreenState extends ConsumerState<ChatListScreen>
                           width: 120,
                           height: 14,
                           decoration: BoxDecoration(
-                            color: AppColors.surfaceVariant,
+                            color: cs.surfaceContainerHighest,
                             borderRadius: BorderRadius.circular(4),
                           ),
                         ),
@@ -177,7 +178,7 @@ class _ChatListScreenState extends ConsumerState<ChatListScreen>
                           width: double.infinity,
                           height: 12,
                           decoration: BoxDecoration(
-                            color: AppColors.surfaceVariant,
+                            color: cs.surfaceContainerHighest,
                             borderRadius: BorderRadius.circular(4),
                           ),
                         ),

@@ -17,7 +17,9 @@ class StudentBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
+    final theme = Theme.of(context);
+    final textTheme = theme.textTheme;
+    final cs = theme.colorScheme;
 
     return Semantics(
       label: 'Student profile',
@@ -30,9 +32,9 @@ class StudentBottomSheet extends StatelessWidget {
         expand: false,
         builder: (context, scrollController) {
           return Container(
-            decoration: const BoxDecoration(
-              color: AppColors.secondary,
-              borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+            decoration: BoxDecoration(
+              color: cs.surface,
+              borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
             ),
             child: ListView(
               controller: scrollController,
@@ -46,7 +48,7 @@ class StudentBottomSheet extends StatelessWidget {
                       width: 32,
                       height: 4,
                       decoration: BoxDecoration(
-                        color: const Color(0xFFDDDDDD),
+                        color: cs.outlineVariant,
                         borderRadius: BorderRadius.circular(2),
                       ),
                     ),
@@ -73,15 +75,15 @@ class StudentBottomSheet extends StatelessWidget {
                         ),
                         child: CircleAvatar(
                           radius: 32,
-                          backgroundColor: AppColors.surfaceVariant,
+                          backgroundColor: cs.surfaceContainerHighest,
                           backgroundImage: student.photoUrl != null
                               ? CachedNetworkImageProvider(student.photoUrl!)
                               : null,
                           child: student.photoUrl == null
-                              ? const Icon(
+                              ? Icon(
                                   Icons.person,
                                   size: 32,
-                                  color: AppColors.onSurfaceDim,
+                                  color: cs.onSurfaceVariant,
                                 )
                               : null,
                         ),
@@ -102,14 +104,14 @@ class StudentBottomSheet extends StatelessWidget {
                             Text(
                               student.university,
                               style: textTheme.labelLarge?.copyWith(
-                                color: AppColors.onSurfaceDim,
+                                color: cs.onSurfaceVariant,
                               ),
                             ),
                             const SizedBox(height: 2),
                             Text(
                               formatDistance(student.distanceKm ?? 0),
                               style: textTheme.bodySmall?.copyWith(
-                                color: AppColors.onSurfaceDim,
+                                color: cs.onSurfaceVariant,
                               ),
                             ),
                           ],

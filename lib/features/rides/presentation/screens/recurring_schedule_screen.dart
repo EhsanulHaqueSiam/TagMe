@@ -48,6 +48,7 @@ class _RecurringScheduleScreenState
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final cs = theme.colorScheme;
     final schedules = ref.watch(mySchedulesProvider);
 
     return Scaffold(
@@ -71,7 +72,7 @@ class _RecurringScheduleScreenState
             Text(
               'Repeat on',
               style: theme.textTheme.labelLarge?.copyWith(
-                color: AppColors.onSurfaceDim,
+                color: theme.colorScheme.onSurfaceVariant,
               ),
             ),
             const SizedBox(height: AppSpacing.sm),
@@ -85,7 +86,7 @@ class _RecurringScheduleScreenState
             Text(
               'Departure Time',
               style: theme.textTheme.labelLarge?.copyWith(
-                color: AppColors.onSurfaceDim,
+                color: theme.colorScheme.onSurfaceVariant,
               ),
             ),
             const SizedBox(height: AppSpacing.sm),
@@ -96,7 +97,7 @@ class _RecurringScheduleScreenState
             Text(
               'Transport Type',
               style: theme.textTheme.labelLarge?.copyWith(
-                color: AppColors.onSurfaceDim,
+                color: theme.colorScheme.onSurfaceVariant,
               ),
             ),
             const SizedBox(height: AppSpacing.sm),
@@ -158,9 +159,9 @@ class _RecurringScheduleScreenState
       child: Container(
         padding: const EdgeInsets.all(AppSpacing.md),
         decoration: BoxDecoration(
-          color: AppColors.secondary,
+          color: theme.colorScheme.surface,
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: AppColors.surfaceVariant),
+          border: Border.all(color: theme.colorScheme.surfaceContainerHighest),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -185,7 +186,7 @@ class _RecurringScheduleScreenState
                       style: theme.textTheme.bodyLarge?.copyWith(
                         color: _originAddress != null
                             ? null
-                            : AppColors.onSurfaceDim,
+                            : theme.colorScheme.onSurfaceVariant,
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -200,7 +201,7 @@ class _RecurringScheduleScreenState
               child: Container(
                 width: 2,
                 height: AppSpacing.md,
-                color: AppColors.surfaceVariant,
+                color: theme.colorScheme.surfaceContainerHighest,
               ),
             ),
             // Destination row
@@ -223,7 +224,7 @@ class _RecurringScheduleScreenState
                       style: theme.textTheme.bodyLarge?.copyWith(
                         color: _destinationAddress != null
                             ? null
-                            : AppColors.onSurfaceDim,
+                            : theme.colorScheme.onSurfaceVariant,
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -236,7 +237,7 @@ class _RecurringScheduleScreenState
             Text(
               'Tap to change route',
               style: theme.textTheme.bodySmall?.copyWith(
-                color: AppColors.onSurfaceDim,
+                color: theme.colorScheme.onSurfaceVariant,
               ),
             ),
           ],
@@ -252,7 +253,7 @@ class _RecurringScheduleScreenState
         height: 48,
         padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
         decoration: BoxDecoration(
-          color: AppColors.surfaceVariant,
+          color: theme.colorScheme.surfaceContainerHighest,
           borderRadius: BorderRadius.circular(12),
         ),
         alignment: Alignment.centerLeft,
@@ -261,7 +262,7 @@ class _RecurringScheduleScreenState
               ? _departureTime!.format(context)
               : 'Select time',
           style: theme.textTheme.bodyLarge?.copyWith(
-            color: _departureTime != null ? null : AppColors.onSurfaceDim,
+            color: _departureTime != null ? null : theme.colorScheme.onSurfaceVariant,
           ),
         ),
       ),
@@ -275,7 +276,7 @@ class _RecurringScheduleScreenState
         Text(
           'Preview',
           style: theme.textTheme.labelLarge?.copyWith(
-            color: AppColors.onSurfaceDim,
+            color: theme.colorScheme.onSurfaceVariant,
           ),
         ),
         const SizedBox(height: AppSpacing.sm),
@@ -289,7 +290,7 @@ class _RecurringScheduleScreenState
               '${_destinationAddress ?? "Destination"} via '
               '${_selectedTransport?.label ?? "Transport"}',
               style: theme.textTheme.bodySmall?.copyWith(
-                color: AppColors.onSurfaceDim,
+                color: theme.colorScheme.onSurfaceVariant,
               ),
             ),
           ),
@@ -328,7 +329,7 @@ class _RecurringScheduleScreenState
               child: Text(
                 'No active schedules yet.',
                 style: theme.textTheme.bodyLarge?.copyWith(
-                  color: AppColors.onSurfaceDim,
+                  color: theme.colorScheme.onSurfaceVariant,
                 ),
               ),
             ),
@@ -448,7 +449,7 @@ class _RecurringScheduleScreenState
                           shape: BoxShape.circle,
                           color: isActive
                               ? AppColors.accent
-                              : AppColors.surfaceVariant,
+                              : theme.colorScheme.surfaceContainerHighest,
                         ),
                         alignment: Alignment.center,
                         child: Text(
@@ -461,12 +462,12 @@ class _RecurringScheduleScreenState
                       );
                     }),
                     const Spacer(),
-                    Icon(transportIcon, size: 20, color: AppColors.onSurfaceDim),
+                    Icon(transportIcon, size: 20, color: theme.colorScheme.onSurfaceVariant),
                     const SizedBox(width: AppSpacing.xs),
                     Text(
                       schedule.departureTime,
                       style: theme.textTheme.bodySmall?.copyWith(
-                        color: AppColors.onSurfaceDim,
+                        color: theme.colorScheme.onSurfaceVariant,
                       ),
                     ),
                   ],

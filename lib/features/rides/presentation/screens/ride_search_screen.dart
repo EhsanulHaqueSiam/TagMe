@@ -38,9 +38,10 @@ class _RideSearchScreenState extends ConsumerState<RideSearchScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final cs = theme.colorScheme;
 
     return Scaffold(
-      backgroundColor: AppColors.dominant,
+      backgroundColor: cs.surface,
       appBar: AppBar(
         title: Text(
           'Search Rides',
@@ -76,14 +77,14 @@ class _RideSearchScreenState extends ConsumerState<RideSearchScreen> {
             horizontal: 12,
           ),
           decoration: BoxDecoration(
-            color: AppColors.surfaceVariant,
+            color: theme.colorScheme.surfaceContainerHighest,
             borderRadius: BorderRadius.circular(12),
           ),
           child: Row(
             children: [
-              const Icon(
+              Icon(
                 Icons.search,
-                color: AppColors.onSurfaceDim,
+                color: theme.colorScheme.onSurfaceVariant,
               ),
               const SizedBox(width: AppSpacing.sm),
               Expanded(
@@ -92,7 +93,7 @@ class _RideSearchScreenState extends ConsumerState<RideSearchScreen> {
                   style: theme.textTheme.bodyLarge?.copyWith(
                     color: _destinationAddress != null
                         ? null
-                        : AppColors.onSurfaceDim,
+                        : theme.colorScheme.onSurfaceVariant,
                   ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -101,10 +102,10 @@ class _RideSearchScreenState extends ConsumerState<RideSearchScreen> {
               if (_destinationAddress != null)
                 GestureDetector(
                   onTap: _clearDestination,
-                  child: const Icon(
+                  child: Icon(
                     Icons.close,
                     size: 20,
-                    color: AppColors.onSurfaceDim,
+                    color: theme.colorScheme.onSurfaceVariant,
                   ),
                 ),
             ],
@@ -174,12 +175,12 @@ class _RideSearchScreenState extends ConsumerState<RideSearchScreen> {
             style: theme.textTheme.bodySmall?.copyWith(
               color: isSelected
                   ? AppColors.accent
-                  : AppColors.onSurfaceDim,
+                  : theme.colorScheme.onSurfaceVariant,
             ),
           ),
           backgroundColor: isSelected
               ? Colors.transparent
-              : AppColors.surfaceVariant,
+              : theme.colorScheme.surfaceContainerHighest,
           side: isSelected
               ? const BorderSide(color: AppColors.accent)
               : BorderSide.none,
@@ -199,7 +200,7 @@ class _RideSearchScreenState extends ConsumerState<RideSearchScreen> {
           child: Text(
             'Set your destination to find rides',
             style: theme.textTheme.bodyLarge?.copyWith(
-              color: AppColors.onSurfaceDim,
+              color: theme.colorScheme.onSurfaceVariant,
             ),
             textAlign: TextAlign.center,
           ),
@@ -223,7 +224,7 @@ class _RideSearchScreenState extends ConsumerState<RideSearchScreen> {
           child: Text(
             'Could not load rides. Pull down to refresh.',
             style: theme.textTheme.bodyLarge?.copyWith(
-              color: AppColors.onSurfaceDim,
+              color: theme.colorScheme.onSurfaceVariant,
             ),
             textAlign: TextAlign.center,
           ),
@@ -241,7 +242,7 @@ class _RideSearchScreenState extends ConsumerState<RideSearchScreen> {
                     'No rides found for this route. '
                     'Try a different time or post your own.',
                     style: theme.textTheme.bodyLarge?.copyWith(
-                      color: AppColors.onSurfaceDim,
+                      color: theme.colorScheme.onSurfaceVariant,
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -483,7 +484,7 @@ class _TimeFilterSheetState extends State<_TimeFilterSheet> {
           horizontal: 12,
         ),
         decoration: BoxDecoration(
-          color: AppColors.surfaceVariant,
+          color: theme.colorScheme.surfaceContainerHighest,
           borderRadius: BorderRadius.circular(12),
         ),
         child: Row(
@@ -491,7 +492,7 @@ class _TimeFilterSheetState extends State<_TimeFilterSheet> {
             Text(
               label,
               style: theme.textTheme.bodySmall?.copyWith(
-                color: AppColors.onSurfaceDim,
+                color: theme.colorScheme.onSurfaceVariant,
               ),
             ),
             const Spacer(),
@@ -540,6 +541,7 @@ class _SearchShimmerListState extends State<_SearchShimmerList>
 
   @override
   Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
     return Padding(
       padding: const EdgeInsets.all(AppSpacing.md),
       child: Column(
@@ -553,7 +555,7 @@ class _SearchShimmerListState extends State<_SearchShimmerList>
               child: Container(
                 height: 120,
                 decoration: BoxDecoration(
-                  color: AppColors.surfaceVariant,
+                  color: cs.surfaceContainerHighest,
                   borderRadius: BorderRadius.circular(12),
                 ),
               ),
